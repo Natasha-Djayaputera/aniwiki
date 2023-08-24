@@ -11,7 +11,8 @@ const CarouselItem: React.FunctionComponent<CarouselItemProps> = ({
   src,
   alt,
 }) => {
-  const openDetailPage = (e: MouseEvent<HTMLImageElement>) => {
+  //TODO make a preview for anime's details
+  const previewDetailPage = (e: MouseEvent<HTMLImageElement>) => {
     console.log("animeId");
   };
 
@@ -21,7 +22,7 @@ const CarouselItem: React.FunctionComponent<CarouselItemProps> = ({
       key={animeId}
       src={src}
       alt={alt}
-      onMouseOver={openDetailPage}
+      onMouseOver={previewDetailPage}
     ></img>
   );
 };
