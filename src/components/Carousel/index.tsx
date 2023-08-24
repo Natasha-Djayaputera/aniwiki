@@ -64,6 +64,26 @@ const DEV_CAROUSELITEMDATA = [
     src: Cover_2,
     alt: "Spy X Family",
   },
+  {
+    animeId: "anime13",
+    src: Cover_1,
+    alt: "Mushoku Tensei",
+  },
+  {
+    animeId: "anime14",
+    src: Cover_2,
+    alt: "Spy X Family",
+  },
+  {
+    animeId: "anime15",
+    src: Cover_1,
+    alt: "Mushoku Tensei",
+  },
+  {
+    animeId: "anime16",
+    src: Cover_2,
+    alt: "Spy X Family",
+  },
 ];
 
 const Carousel: React.FunctionComponent = () => {
