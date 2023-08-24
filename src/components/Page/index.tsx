@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Background from "../../assets/placeholders/background.jpg";
 import { AnimeData, fetchTopAiringAnime } from "../../services/jikanService";
 import Carousel from "../Carousel";
 
@@ -31,7 +30,7 @@ const Page: React.FunctionComponent = () => {
       {topAiringAnime && (
         <div className="featured">
           <img
-            src={Background}
+            src={`${topAiringAnime[0].images.jpg.large_image_url}`}
             alt="featured-background"
             className="featured-background "
           />
