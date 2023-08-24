@@ -7,7 +7,7 @@ const Page: React.FunctionComponent = () => {
     null
   );
 
-  const topAiring = async () => {
+  const getTopAiring = async () => {
     try {
       const response = await fetchTopAiringAnime();
 
@@ -22,7 +22,7 @@ const Page: React.FunctionComponent = () => {
   };
 
   useEffect(() => {
-    topAiring();
+    getTopAiring();
   }, []);
 
   return (
