@@ -1,38 +1,332 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --default-font-size: calc((0.2/16)*100vw);
+  --default-font: 'Poppins', sans-serif;
+  --default-side-padding: 3em;
+  --default-button-padding: 0.5em 1em;
+  --default-button-border-radius: 0.3em;
+  --default-ratio-height-size: calc((9/16) * 100vw);
+
+  font-size: var(--default-font-size);
+  font-weight: 300;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@keyframes header-scroll-down-color-animation {
+  0% {background-color: "";}
+  100% {background-color: black;}
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@keyframes header-scroll-up-color-animation {
+  0% {background-color: black;}
+  100% {background-color: "";}
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.25em;
+  font-weight: 500;
+  font-variant-caps: all-petite-caps;
+}
+
+/* to fix 3rd party CSS framework box-sizing */
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+html, body, #root, .App {
+  height: 200%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--default-font);
+  background-color: red;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  font-size: 0.875em;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.8) 90%
+  );
+  padding: 0.75em var(--default-side-padding);
+  z-index: 1;
+}
+
+.header-color-unpinned {
+  animation: header-scroll-up-color-animation 1s;
+  animation-fill-mode: forwards;
+}
+
+.header-color-pinned {
+  animation: header-scroll-down-color-animation 0.5s;
+  animation-fill-mode: forwards;
+}
+
+header > a > img {
+  height: 3em;
+  margin-right: 2em;
+}
+
+header > * {
+  font-weight: 600;
+}
+
+.site-nav {
+  display: flex;
+  padding: .5em;
+  list-style-type: none;
+  margin: 0;
+}
+
+.site-nav > li {
+  margin-top: 0;
+}
+
+.site-nav > li > a {
+  display: block;
+  padding: var(--default-button-padding);
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.search-box{
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+  font-size: var(--default-font-size);
+}
+
+.input-search{
+  height: 2.5em;
+  width: 2.5em;
+  border-style: none;
+  font-size: 1em;
+  outline: none;
+  border-radius: 50%;
+  transition: all .5s ease-in-out;
+  background-color: rgba(0,0,0,0);
+  padding-right: 2.5em;
+  color:#fff;
+}
+
+.input-search::placeholder{
+  color:rgba(255,255,255,0.7);
+  font-size: 0.875em;
+  font-weight: 100;
+}
+
+.btn-search{
+  width: 2.5em;
+  height: 2.5em;
+  border-style: none;
+  font-size: 1em;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  color:#ffffff ;
+  background-color:transparent;
+  pointer-events: painted;  
+}
+
+.btn-search:focus ~ .input-search{
+  width: 20em;
+  border-radius: 0;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255,255,255,.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+.input-search:focus{
+  width: 20em;
+  border-radius: 0;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255,255,255,.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  background-color: black;
+  font-size: var(--default-font-size);
+}
+
+.featured {
+  position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 100%;
+  height: var(--default-ratio-height-size);
+  overflow: hidden;
+}
+
+.featured-background {
+  /* z-index: 0; */
+  flex: 1;
+  object-fit: cover;
+  max-width: 100%;
+}
+
+.featured-body {
+  position: absolute;
+  z-index: 100;
+  width: 40vw;
+  padding: calc(var(--default-font-size) * 10) var(--default-side-padding);
+  height: 100%;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.featured-body > * {
+  margin: 0;
+  padding: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.featured-body > * + *{
+  margin-top: var(--default-font-size);
+}
+
+.featured-body > a {
+  display: block;
+  width: fit-content;
+  padding: var(--default-button-padding);
+  background-color: white;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: black;
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--default-button-border-radius);
+  cursor: pointer;
+}
+
+.featured-bottom-border {
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 10%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  height: 5em;
+  width: 100%;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  margin-top: calc(var(--default-font-size) * -5);
+  /* background-color: rgba(50,220,50,0.5); */
+  color: white;
+  padding: 0.5em var(--default-side-padding);
+}
+
+.wrapper {
+  position: relative;
+}
+
+.wrapper .slider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0,0,0,0.5);
+  width: var(--default-side-padding);
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  transition: 0.1s;
+}
+
+.wrapper .slider:first-child {
+  left: calc(var(--default-side-padding) * -1);
+}
+
+.wrapper .slider:last-child {
+  right: calc(var(--default-side-padding) * -1);
+}
+
+.wrapper .slider:hover i{
+  font-size: 2em;
+  transition: 0.1s;
+}
+
+.wrapper .carousel {
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.carousel.dragging {
+  cursor: grab;
+  scroll-behavior: auto;
+}
+
+.carousel.dragging img {
+  pointer-events: none;
+}
+
+.carousel {
+  background: yellow;
+}
+
+.carousel > * + * {
+  padding: 0 0 0 0.1em;
+}
+
+.carousel img {
+  width: calc(100% / 7);
+  /* Aspect Ratio is A6, 10.5cm x 14.8cm or 4.1" x 5.8", taken from normal light novel size */
+  aspect-ratio: 10.5/14.8;
+  object-fit: cover;
+}
+
+.carousel-title {
+  background: blue;
+}
+
+.flex {
+  display: flex;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  width: 100%;
+}
+
+.vertical-center{
+  align-items: center;
+}
+
+.horizontal-right {
+  justify-self: end;
+  margin-left: auto;
+}
+
+.horizontal-left {
+  justify-self: start;
 }
