@@ -194,7 +194,7 @@ main {
 .featured-body {
   position: absolute;
   z-index: 100;
-  width: 40vw;
+  width: 50vw;
   padding: calc(var(--default-font-size) * 10) var(--default-side-padding);
   height: 100%;
   color: white;
@@ -203,6 +203,14 @@ main {
 .featured-body > * {
   margin: 0;
   padding: 0;
+}
+
+.ellipsis-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .featured-body > * + *{
@@ -281,6 +289,7 @@ main {
   cursor: pointer;
   overflow: hidden;
   scroll-behavior: smooth;
+  line-height: 0;
 }
 
 .carousel.dragging {
@@ -292,20 +301,12 @@ main {
   pointer-events: none;
 }
 
-.carousel {
-  background: yellow;
-}
-
-.carousel > * + * {
-  padding: 0 0 0 0.1em;
-}
-
-.carousel:last-child {
-  padding-right: 0;
+.carousel > * {
+  margin: 0 0.2em 0 0;
 }
 
 .carousel img {
-  width: calc(100% / 7);
+  width: calc((100% / 7) - 0.2em);
   /* Aspect Ratio is A6, 10.5cm x 14.8cm or 4.1" x 5.8", taken from normal light novel size */
   aspect-ratio: 10.5/14.8;
   /* object-fit: cover; */

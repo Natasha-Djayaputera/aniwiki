@@ -1,32 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Background from "../../assets/placeholders/background.jpg";
+import { AnimeData, fetchTopAiringAnime } from "../../services/jikanService";
 import Carousel from "../Carousel";
 
 const Page: React.FunctionComponent = () => {
+  const [topAiringAnime, setTopAiringAnime] = useState<AnimeData[] | null>(
+    null
+  );
+
+  const topAiring = async () => {
+    try {
+      const response = await fetchTopAiringAnime();
+
+      console.log(response);
+      if (response.status === 200) {
+        setTopAiringAnime(response.data.data);
+        console.log(topAiringAnime);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    topAiring();
+  }, []);
+
   return (
     <main className="">
-      <div className="featured">
-        <img
-          src={Background}
-          alt="featured-background"
-          className="background"
-        />
-        <div className="featured-body">
-          <h3>Genre</h3>
-          <h1>TOP AIRING ANIME TITLE</h1>
-          <p>
-            Nostrud laboris fugiat dolore voluptate excepteur consectetur veniam
-            velit sit. Consectetur dolor ad quis consectetur fugiat id pariatur
-            commodo sunt adipisicing pariatur eiusmod. Eu irure sunt do
-            reprehenderit commodo ut magna est ad elit tempor.
-          </p>
+      {topAiringAnime && (
+        <div className="featured">
+          <img
+            src={Background}
+            alt="featured-background"
+            className="featured-background "
+          />
+          <div className="featured-body">
+            <h3>{`${topAiringAnime[0].genres
+              .map((genre) => genre.name)
+              .join(", ")}`}</h3>
+            <h1>{`${topAiringAnime[0].title_english}`}</h1>
+            <p className="ellipsis-multiline">{`${topAiringAnime[0].synopsis}`}</p>
+          </div>
+          <div className="featured-bottom-border"></div>
         </div>
-        <div className="featured-bottom-border"></div>
-      </div>
+      )}
       <div className="content">
         <div className="content-item">
           <h3>Top Airing Anime</h3>
-          <Carousel />
+          <Carousel itemData={topAiringAnime} />
         </div>
         <div className="content-item">
           <h3>Current Season Anime</h3>

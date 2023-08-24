@@ -1,98 +1,23 @@
-import React, { MouseEvent, useRef, useState } from "react";
-import Cover_1 from "../../assets/placeholders/cover-mockup_1.jpg";
-import Cover_2 from "../../assets/placeholders/cover-mockup_2.jpg";
-import CarouselItem, { CarouselItemProps } from "../CarouselItem";
+import React, { MouseEvent, useEffect, useRef, useState } from "react";
+import { AnimeData } from "../../services/jikanService";
+import CarouselItem from "../CarouselItem";
 
-const DEV_CAROUSELITEMDATA = [
-  {
-    animeId: "anime01",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime02",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-  {
-    animeId: "anime03",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime04",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-  {
-    animeId: "anime05",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime06",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-  {
-    animeId: "anime07",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime08",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-  {
-    animeId: "anime09",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime10",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-  {
-    animeId: "anime11",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime12",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-  {
-    animeId: "anime13",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime14",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-  {
-    animeId: "anime15",
-    src: Cover_1,
-    alt: "Mushoku Tensei",
-  },
-  {
-    animeId: "anime16",
-    src: Cover_2,
-    alt: "Spy X Family",
-  },
-];
+export interface CarouselProps {
+  itemData: AnimeData[] | null;
+}
 
-const Carousel: React.FunctionComponent = () => {
+const Carousel: React.FunctionComponent<CarouselProps> = ({ itemData }) => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isDragStart, setIsDragStart] = useState<boolean>(false);
   const [prevPageX, setPrevPageX] = useState<number>(0);
   const [prevScrollLeft, setPrevScrollLeft] = useState<number>(0);
-  const [carouselItemData, setCarouselItemData] =
-    useState<CarouselItemProps[]>(DEV_CAROUSELITEMDATA);
+  const [carouselItemData, setCarouselItemData] = useState<AnimeData[]>([]);
+
+  useEffect(() => {
+    if (itemData) {
+      setCarouselItemData(itemData);
+    }
+  }, [itemData]);
 
   const dragStart = (e: MouseEvent<HTMLDivElement>): void => {
     // updating global variables value on mouse down event
@@ -130,17 +55,11 @@ const Carousel: React.FunctionComponent = () => {
     }
   };
 
-  const mapCarouselItem = carouselItemData
-    .slice(0, carouselItemData.length)
+  const mapCarouselItem = carouselItemData!
+    .slice(0, carouselItemData!.length)
     .map((carouselItem) => {
       let currentCarouselItem = carouselItem;
-      return (
-        <CarouselItem
-          animeId={`${currentCarouselItem.animeId}`}
-          src={`${currentCarouselItem.src}`}
-          alt={`${currentCarouselItem.alt}`}
-        />
-      );
+      return <CarouselItem animeData={currentCarouselItem} />;
     });
 
   return (
@@ -155,7 +74,7 @@ const Carousel: React.FunctionComponent = () => {
         onMouseMove={dragging}
         onMouseUp={dragStop}
       >
-        {mapCarouselItem}
+        {carouselItemData && mapCarouselItem}
       </div>
       <div className="slider" onClick={slideRight}>
         <i className="fa-solid fa-angle-right"></i>
