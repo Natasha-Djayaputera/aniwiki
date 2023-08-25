@@ -8,6 +8,7 @@ import {
 import Carousel from "../Carousel";
 
 const Page: React.FunctionComponent = () => {
+  const [featuredAnime, setFeaturedAnime] = useState<anime | undefined>();
   const [topAiringAnime, setTopAiringAnime] = useState<anime[] | undefined>();
   const [topUpcomingAnime, setTopUpcomingAnime] = useState<
     anime[] | undefined
@@ -23,9 +24,7 @@ const Page: React.FunctionComponent = () => {
         top_anime_filter.AIRING
       );
 
-      console.log(response);
       setTopAiringAnime(response.data);
-      console.log(topAiringAnime);
     } catch (e) {
       console.log(e);
     }
@@ -35,9 +34,10 @@ const Page: React.FunctionComponent = () => {
     try {
       const response = await SeasonsService.getSeasonNow();
 
-      console.log(response);
       setCurrentSeasonAnime(response.data);
-      console.log(currentSeasonAnime);
+      setFeaturedAnime(
+        response.data![Math.floor(Math.random() * response.data!.length)]
+      );
     } catch (e) {
       console.log(e);
     }
@@ -50,9 +50,7 @@ const Page: React.FunctionComponent = () => {
         top_anime_filter.UPCOMING
       );
 
-      console.log(response);
       setTopUpcomingAnime(response.data);
-      console.log(topUpcomingAnime);
     } catch (e) {
       console.log(e);
     }
@@ -66,19 +64,20 @@ const Page: React.FunctionComponent = () => {
 
   return (
     <main className="">
-      {typeof topAiringAnime !== "undefined" && (
+      {typeof featuredAnime !== "undefined" && (
         <div className="featured">
           <img
-            src={`${topAiringAnime[0].images!.jpg!.large_image_url}`}
+            src={`${featuredAnime.images!.jpg!.large_image_url}`}
             alt="featured-background"
             className="featured-background "
           />
           <div className="featured-body">
-            <h3>{`${topAiringAnime[0]
-              .genres!.map((genre) => genre.name)
-              .join(", ")}`}</h3>
-            <h1>{`${topAiringAnime[0].title_english}`}</h1>
-            <p className="ellipsis-multiline">{`${topAiringAnime[0].synopsis}`}</p>
+            <h1>{`${featuredAnime.title_english}`}</h1>
+            <p className="ellipsis-multiline">{`${featuredAnime.synopsis}`}</p>
+            <a href={`/anime/${featuredAnime.mal_id}`}>
+              <i className="fa-solid fa-circle-info more-info-icon"></i>More
+              Info
+            </a>
           </div>
           <div className="featured-bottom-border"></div>
         </div>
