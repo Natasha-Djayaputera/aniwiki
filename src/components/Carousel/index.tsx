@@ -1,9 +1,9 @@
 import React, { MouseEvent, useEffect, useRef, useState } from "react";
-import { AnimeData } from "../../services/jikanService";
+import { anime } from "../../generated/jikan";
 import CarouselItem from "../CarouselItem";
 
 export interface CarouselProps {
-  itemData: AnimeData[] | null;
+  itemData: anime[] | undefined;
 }
 
 const Carousel: React.FunctionComponent<CarouselProps> = ({ itemData }) => {
@@ -11,7 +11,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({ itemData }) => {
   const [isDragStart, setIsDragStart] = useState<boolean>(false);
   const [prevPageX, setPrevPageX] = useState<number>(0);
   const [prevScrollLeft, setPrevScrollLeft] = useState<number>(0);
-  const [carouselItemData, setCarouselItemData] = useState<AnimeData[]>([]);
+  const [carouselItemData, setCarouselItemData] = useState<anime[]>([]);
 
   useEffect(() => {
     if (itemData) {

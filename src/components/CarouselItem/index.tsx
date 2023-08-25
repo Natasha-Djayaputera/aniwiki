@@ -1,9 +1,9 @@
 import React, { MouseEvent } from "react";
 import Cover from "../../assets/placeholders/cover-mockup_1.jpg";
-import { AnimeData } from "../../services/jikanService";
+import { anime } from "../../generated/jikan";
 
 export interface CarouselItemProps {
-  animeData: AnimeData | null;
+  animeData: anime | undefined;
 }
 
 const CarouselItem: React.FunctionComponent<CarouselItemProps> = ({
@@ -19,8 +19,8 @@ const CarouselItem: React.FunctionComponent<CarouselItemProps> = ({
       <img
         id={`${animeData.mal_id}`}
         key={animeData.mal_id}
-        src={animeData.images.jpg.image_url}
-        alt={animeData.title_english}
+        src={animeData.images!.jpg!.image_url ?? ""}
+        alt={animeData.title_english ?? ""}
         onMouseOver={previewDetailPage}
       ></img>
     );

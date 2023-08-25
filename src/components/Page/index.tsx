@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { AnimeData, fetchTopAiringAnime } from "../../services/jikanService";
+import { TopService, anime, top_anime_filter } from "../../generated/jikan";
 import Carousel from "../Carousel";
 
 const Page: React.FunctionComponent = () => {
-  const [topAiringAnime, setTopAiringAnime] = useState<AnimeData[] | null>(
-    null
-  );
+  const [topAiringAnime, setTopAiringAnime] = useState<anime[] | undefined>();
 
   const getTopAiring = async () => {
     try {
-      const response = await fetchTopAiringAnime();
+      const response = await TopService.getTopAnime(
+        undefined,
+        top_anime_filter.AIRING
+      );
 
       console.log(response);
-      if (response.status === 200) {
-        setTopAiringAnime(response.data.data);
-        console.log(topAiringAnime);
-      }
+      setTopAiringAnime(response.data);
+      console.log(topAiringAnime);
     } catch (e) {
       console.log(e);
     }
@@ -27,16 +26,16 @@ const Page: React.FunctionComponent = () => {
 
   return (
     <main className="">
-      {topAiringAnime && (
+      {typeof topAiringAnime !== "undefined" && (
         <div className="featured">
           <img
-            src={`${topAiringAnime[0].images.jpg.large_image_url}`}
+            src={`${topAiringAnime[0].images!.jpg!.large_image_url}`}
             alt="featured-background"
             className="featured-background "
           />
           <div className="featured-body">
-            <h3>{`${topAiringAnime[0].genres
-              .map((genre) => genre.name)
+            <h3>{`${topAiringAnime[0]
+              .genres!.map((genre) => genre.name)
               .join(", ")}`}</h3>
             <h1>{`${topAiringAnime[0].title_english}`}</h1>
             <p className="ellipsis-multiline">{`${topAiringAnime[0].synopsis}`}</p>
