@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import AnimePage from "./pages/anime";
 import HomePage from "./pages/home";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <div className="App">
       <Header />

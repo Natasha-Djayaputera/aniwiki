@@ -1,6 +1,6 @@
 import Page from "../../components/Page";
 
-const AnimePage = () => {
+const AnimePage: React.FC = () => {
   return <Page />;
 };
 
