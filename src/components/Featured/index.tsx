@@ -2,10 +2,14 @@ import React from "react";
 import { anime } from "../../generated/jikan";
 
 export interface FeaturedProps {
-  featuredData: anime;
+  featuredData: anime | undefined;
 }
 
-const Featured: React.FunctionComponent<FeaturedProps> = ({ featuredData }) => {
+const Featured: React.FC<FeaturedProps> = ({ featuredData }) => {
+  if (featuredData === undefined) {
+    return null;
+  }
+
   return (
     <div className="featured">
       <img

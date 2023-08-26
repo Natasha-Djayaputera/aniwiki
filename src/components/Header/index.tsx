@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../logo.svg";
 
-const Header: React.FunctionComponent = () => {
+const Header: React.FC = () => {
   const [pinned, setPinned] = useState("-unpinned");
 
   const listenScrollEvent = () => {

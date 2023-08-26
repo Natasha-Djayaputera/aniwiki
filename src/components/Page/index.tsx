@@ -8,7 +8,7 @@ import {
 } from "../../generated/jikan";
 import Carousel from "../Carousel";
 
-const Page: React.FunctionComponent = () => {
+const Page: React.FC = () => {
   const [topAiringAnime, setTopAiringAnime] = useState<anime[] | undefined>();
   const [topUpcomingAnime, setTopUpcomingAnime] = useState<
     anime[] | undefined

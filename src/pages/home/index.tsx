@@ -6,7 +6,7 @@ import { useCurrentSeasonAnime } from "../../hooks/useCurrentSeasonAnime";
 import { useTopAiringAnime } from "../../hooks/useTopAiringAnime";
 import { useTopUpcomingAnime } from "../../hooks/useTopUpcomingAnime";
 
-const HomePage: React.FunctionComponent = () => {
+const HomePage: React.FC = () => {
   const topAiringAnime = useTopAiringAnime();
   const currentSeasonAnime = useCurrentSeasonAnime();
   const topUpcomingAnime = useTopUpcomingAnime();
@@ -18,9 +18,7 @@ const HomePage: React.FunctionComponent = () => {
 
   return (
     <main>
-      {typeof featuredAnime !== "undefined" && (
-        <Featured featuredData={featuredAnime} />
-      )}
+      <Featured featuredData={featuredAnime} />
       <div className="content">
         <div className="content-item">
           <h3>Top Airing Anime</h3>

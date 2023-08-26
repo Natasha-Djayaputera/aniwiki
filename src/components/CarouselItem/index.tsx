@@ -6,32 +6,25 @@ export interface CarouselItemProps {
   animeData: anime | undefined;
 }
 
-const CarouselItem: React.FunctionComponent<CarouselItemProps> = ({
-  animeData,
-}) => {
+const CarouselItem: React.FC<CarouselItemProps> = ({ animeData }) => {
   //TODO make a preview for anime's details
   const previewDetailPage = (e: MouseEvent<HTMLImageElement>) => {
     console.log(`${animeData?.title_english}`);
   };
 
-  if (animeData) {
+  if (typeof animeData?.images?.jpg?.image_url === "string") {
     return (
       <img
         id={`${animeData.mal_id}`}
         key={animeData.mal_id}
-        src={animeData.images!.jpg!.image_url ?? ""}
+        src={animeData.images.jpg.image_url}
         alt={animeData.title_english ?? ""}
         onMouseOver={previewDetailPage}
-      ></img>
+      />
     );
   } else {
     return (
-      <img
-        id="placeholder"
-        key="placeholder"
-        src={Cover}
-        alt="placeholder"
-      ></img>
+      <img id="placeholder" key="placeholder" src={Cover} alt="placeholder" />
     );
   }
 };

@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useRef, useState } from "react";
+import React, { MouseEvent, useRef, useState } from "react";
 import { anime } from "../../generated/jikan";
 import CarouselItem from "../CarouselItem";
 
@@ -6,18 +6,13 @@ export interface CarouselProps {
   itemData: anime[] | undefined;
 }
 
-const Carousel: React.FunctionComponent<CarouselProps> = ({ itemData }) => {
+const Carousel: React.FC<CarouselProps> = ({
+  itemData: carouselItemData = [],
+}) => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isDragStart, setIsDragStart] = useState<boolean>(false);
   const [prevPageX, setPrevPageX] = useState<number>(0);
   const [prevScrollLeft, setPrevScrollLeft] = useState<number>(0);
-  const [carouselItemData, setCarouselItemData] = useState<anime[]>([]);
-
-  useEffect(() => {
-    if (itemData) {
-      setCarouselItemData(itemData);
-    }
-  }, [itemData]);
 
   const dragStart = (e: MouseEvent<HTMLDivElement>): void => {
     // updating global variables value on mouse down event
@@ -55,12 +50,10 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({ itemData }) => {
     }
   };
 
-  const mapCarouselItem = carouselItemData!
-    .slice(0, carouselItemData!.length)
-    .map((carouselItem) => {
-      let currentCarouselItem = carouselItem;
-      return <CarouselItem animeData={currentCarouselItem} />;
-    });
+  const carouselItemMap = carouselItemData!.map((carouselItem) => {
+    let currentCarouselItem = carouselItem;
+    return <CarouselItem animeData={currentCarouselItem} />;
+  });
 
   return (
     <div className="wrapper">
@@ -74,7 +67,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({ itemData }) => {
         onMouseMove={dragging}
         onMouseUp={dragStop}
       >
-        {carouselItemData && mapCarouselItem}
+        {carouselItemMap}
       </div>
       <div className="slider" onClick={slideRight}>
         <i className="fa-solid fa-angle-right"></i>
