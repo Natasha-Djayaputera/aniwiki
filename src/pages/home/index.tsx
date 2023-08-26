@@ -1,65 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import Carousel from "../../components/Carousel";
 import Featured from "../../components/Featured";
-import {
-  SeasonsService,
-  TopService,
-  anime,
-  top_anime_filter,
-} from "../../generated/jikan";
+import { getRandomElementOf } from "../../helpers/array";
+import { useCurrentSeasonAnime } from "../../hooks/useCurrentSeasonAnime";
+import { useTopAiringAnime } from "../../hooks/useTopAiringAnime";
+import { useTopUpcomingAnime } from "../../hooks/useTopUpcomingAnime";
 
 const HomePage: React.FunctionComponent = () => {
-  const [featuredAnime, setFeaturedAnime] = useState<anime | undefined>();
-  const [topAiringAnime, setTopAiringAnime] = useState<anime[] | undefined>();
-  const [topUpcomingAnime, setTopUpcomingAnime] = useState<
-    anime[] | undefined
-  >();
-  const [currentSeasonAnime, setCurrentSeasonAnime] = useState<
-    anime[] | undefined
-  >();
+  const topAiringAnime = useTopAiringAnime();
+  const currentSeasonAnime = useCurrentSeasonAnime();
+  const topUpcomingAnime = useTopUpcomingAnime();
 
-  const getTopAiring = async () => {
-    try {
-      const response = await TopService.getTopAnime({
-        filter: top_anime_filter.AIRING,
-      });
-
-      setTopAiringAnime(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getCurrentSeason = async () => {
-    try {
-      const response = await SeasonsService.getSeasonNow({});
-
-      setCurrentSeasonAnime(response.data);
-      setFeaturedAnime(
-        response.data![Math.floor(Math.random() * response.data!.length)]
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getTopUpcoming = async () => {
-    try {
-      const response = await TopService.getTopAnime({
-        filter: top_anime_filter.UPCOMING,
-      });
-
-      setTopUpcomingAnime(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    getTopAiring();
-    getCurrentSeason();
-    getTopUpcoming();
-  }, []);
+  const featuredAnime = useMemo(
+    () => getRandomElementOf(currentSeasonAnime ?? []),
+    [currentSeasonAnime]
+  );
 
   return (
     <main>
