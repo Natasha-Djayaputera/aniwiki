@@ -1,25 +1,24 @@
 /* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
-/* eslint-disable */
 
 export type user_images = {
+  /**
+   * Available images in JPG
+   */
+  jpg?: {
     /**
-     * Available images in JPG
+     * Image URL JPG
      */
-    jpg?: {
-/**
- * Image URL JPG
- */
-image_url?: string | null;
-};
+    image_url?: string | null;
+  };
+  /**
+   * Available images in WEBP
+   */
+  webp?: {
     /**
-     * Available images in WEBP
+     * Image URL WEBP
      */
-    webp?: {
-/**
- * Image URL WEBP
- */
-image_url?: string | null;
-};
+    image_url?: string | null;
+  };
 };

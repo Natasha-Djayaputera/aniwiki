@@ -1,33 +1,32 @@
 /* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
-/* eslint-disable */
 
 export type character_images = {
+  /**
+   * Available images in JPG
+   */
+  jpg?: {
     /**
-     * Available images in JPG
+     * Image URL JPG
      */
-    jpg?: {
-/**
- * Image URL JPG
- */
-image_url?: string | null;
-/**
- * Small Image URL JPG
- */
-small_image_url?: string | null;
-};
+    image_url?: string | null;
     /**
-     * Available images in WEBP
+     * Small Image URL JPG
      */
-    webp?: {
-/**
- * Image URL WEBP
- */
-image_url?: string | null;
-/**
- * Small Image URL WEBP
- */
-small_image_url?: string | null;
-};
+    small_image_url?: string | null;
+  };
+  /**
+   * Available images in WEBP
+   */
+  webp?: {
+    /**
+     * Image URL WEBP
+     */
+    image_url?: string | null;
+    /**
+     * Small Image URL WEBP
+     */
+    small_image_url?: string | null;
+  };
 };

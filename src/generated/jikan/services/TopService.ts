@@ -1,7 +1,7 @@
 /* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
-/* eslint-disable */
+
 import type { anime_meta } from "../models/anime_meta";
 import type { anime_review } from "../models/anime_review";
 import type { anime_search } from "../models/anime_search";
@@ -25,23 +25,27 @@ import { request as __request } from "../core/request";
 
 export class TopService {
   /**
-   * @param type
-   * @param filter
-   * @param rating
-   * @param sfw Filter out Adult entries
-   * @param page
-   * @param limit
    * @returns anime_search Returns top anime
    * @throws ApiError
    */
-  public static getTopAnime(
-    type?: anime_search_query_type,
-    filter?: top_anime_filter,
-    rating?: anime_search_query_rating,
-    sfw?: boolean,
-    page?: number,
-    limit?: number
-  ): CancelablePromise<anime_search> {
+  public static getTopAnime({
+    type,
+    filter,
+    rating,
+    sfw,
+    page,
+    limit,
+  }: {
+    type?: anime_search_query_type;
+    filter?: top_anime_filter;
+    rating?: anime_search_query_rating;
+    /**
+     * Filter out Adult entries
+     */
+    sfw?: boolean;
+    page?: number;
+    limit?: number;
+  }): CancelablePromise<anime_search> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/top/anime",
@@ -60,19 +64,20 @@ export class TopService {
   }
 
   /**
-   * @param type
-   * @param filter
-   * @param page
-   * @param limit
    * @returns manga_search Returns top manga
    * @throws ApiError
    */
-  public static getTopManga(
-    type?: manga_search_query_type,
-    filter?: top_manga_filter,
-    page?: number,
-    limit?: number
-  ): CancelablePromise<manga_search> {
+  public static getTopManga({
+    type,
+    filter,
+    page,
+    limit,
+  }: {
+    type?: manga_search_query_type;
+    filter?: top_manga_filter;
+    page?: number;
+    limit?: number;
+  }): CancelablePromise<manga_search> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/top/manga",
@@ -89,15 +94,16 @@ export class TopService {
   }
 
   /**
-   * @param page
-   * @param limit
    * @returns people_search Returns top people
    * @throws ApiError
    */
-  public static getTopPeople(
-    page?: number,
-    limit?: number
-  ): CancelablePromise<people_search> {
+  public static getTopPeople({
+    page,
+    limit,
+  }: {
+    page?: number;
+    limit?: number;
+  }): CancelablePromise<people_search> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/top/people",
@@ -112,15 +118,16 @@ export class TopService {
   }
 
   /**
-   * @param page
-   * @param limit
    * @returns characters_search Returns top characters
    * @throws ApiError
    */
-  public static getTopCharacters(
-    page?: number,
-    limit?: number
-  ): CancelablePromise<characters_search> {
+  public static getTopCharacters({
+    page,
+    limit,
+  }: {
+    page?: number;
+    limit?: number;
+  }): CancelablePromise<characters_search> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/top/characters",
@@ -135,19 +142,26 @@ export class TopService {
   }
 
   /**
-   * @param page
-   * @param type
-   * @param preliminary Whether the results include preliminary reviews or not. Defaults to true.
-   * @param spoilers Whether the results include reviews with spoilers or not. Defaults to true.
    * @returns any Returns top reviews
    * @throws ApiError
    */
-  public static getTopReviews(
-    page?: number,
-    type?: top_reviews_type_enum,
-    preliminary?: boolean,
-    spoilers?: boolean
-  ): CancelablePromise<{
+  public static getTopReviews({
+    page,
+    type,
+    preliminary,
+    spoilers,
+  }: {
+    page?: number;
+    type?: top_reviews_type_enum;
+    /**
+     * Whether the results include preliminary reviews or not. Defaults to true.
+     */
+    preliminary?: boolean;
+    /**
+     * Whether the results include reviews with spoilers or not. Defaults to true.
+     */
+    spoilers?: boolean;
+  }): CancelablePromise<{
     data?: {
       data?: Array<
         | ({

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   SeasonsService,
   TopService,
@@ -8,7 +9,6 @@ import {
 import Carousel from "../Carousel";
 
 const Page: React.FunctionComponent = () => {
-  const [featuredAnime, setFeaturedAnime] = useState<anime | undefined>();
   const [topAiringAnime, setTopAiringAnime] = useState<anime[] | undefined>();
   const [topUpcomingAnime, setTopUpcomingAnime] = useState<
     anime[] | undefined
@@ -17,12 +17,13 @@ const Page: React.FunctionComponent = () => {
     anime[] | undefined
   >();
 
+  const path = useLocation();
+
   const getTopAiring = async () => {
     try {
-      const response = await TopService.getTopAnime(
-        undefined,
-        top_anime_filter.AIRING
-      );
+      const response = await TopService.getTopAnime({
+        filter: top_anime_filter.AIRING,
+      });
 
       setTopAiringAnime(response.data);
     } catch (e) {
@@ -32,12 +33,9 @@ const Page: React.FunctionComponent = () => {
 
   const getCurrentSeason = async () => {
     try {
-      const response = await SeasonsService.getSeasonNow();
+      const response = await SeasonsService.getSeasonNow({});
 
       setCurrentSeasonAnime(response.data);
-      setFeaturedAnime(
-        response.data![Math.floor(Math.random() * response.data!.length)]
-      );
     } catch (e) {
       console.log(e);
     }
@@ -45,10 +43,9 @@ const Page: React.FunctionComponent = () => {
 
   const getTopUpcoming = async () => {
     try {
-      const response = await TopService.getTopAnime(
-        undefined,
-        top_anime_filter.UPCOMING
-      );
+      const response = await TopService.getTopAnime({
+        filter: top_anime_filter.UPCOMING,
+      });
 
       setTopUpcomingAnime(response.data);
     } catch (e) {
@@ -60,28 +57,12 @@ const Page: React.FunctionComponent = () => {
     getTopAiring();
     getCurrentSeason();
     getTopUpcoming();
+    console.log(path);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <main className="">
-      {typeof featuredAnime !== "undefined" && (
-        <div className="featured">
-          <img
-            src={`${featuredAnime.images!.jpg!.large_image_url}`}
-            alt="featured-background"
-            className="featured-background "
-          />
-          <div className="featured-body">
-            <h1>{`${featuredAnime.title_english}`}</h1>
-            <p className="ellipsis-multiline">{`${featuredAnime.synopsis}`}</p>
-            <a href={`/anime/${featuredAnime.mal_id}`}>
-              <i className="fa-solid fa-circle-info more-info-icon"></i>More
-              Info
-            </a>
-          </div>
-          <div className="featured-bottom-border"></div>
-        </div>
-      )}
+    <main>
       <div className="content">
         <div className="content-item">
           <h3>Top Airing Anime</h3>
