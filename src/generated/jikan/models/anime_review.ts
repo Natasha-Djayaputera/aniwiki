@@ -2,7 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 
+import { user_meta } from "./user_meta";
+
 export type anime_review = {
+  user?: user_meta | undefined;
   /**
    * MyAnimeList ID
    */

@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
   return (
     <main>
       <Featured featuredData={featuredAnime} />
-      <div className="content">
+      <div className="content-home">
         <div className="content-item">
           <h3>Top Airing Anime</h3>
           <Carousel itemData={topAiringAnime} />

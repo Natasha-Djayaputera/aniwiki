@@ -8,38 +8,40 @@ import type { people_images } from "./people_images";
 /**
  * Anime Characters Resource
  */
-export type anime_characters = {
-  data?: Array<{
+export type anime_character = {
+  /**
+   * Character details
+   */
+  character?: {
     /**
-     * Character details
+     * MyAnimeList ID
      */
-    character?: {
-      /**
-       * MyAnimeList ID
-       */
+    mal_id?: number;
+    /**
+     * MyAnimeList URL
+     */
+    url?: string;
+    images?: character_images;
+    /**
+     * Character Name
+     */
+    name?: string;
+  };
+  /**
+   * Character's Role
+   */
+  role?: string;
+  voice_actors?: Array<{
+    person?: {
       mal_id?: number;
-      /**
-       * MyAnimeList URL
-       */
       url?: string;
-      images?: character_images;
-      /**
-       * Character Name
-       */
+      images?: people_images;
       name?: string;
     };
-    /**
-     * Character's Role
-     */
-    role?: string;
-    voice_actors?: Array<{
-      person?: {
-        mal_id?: number;
-        url?: string;
-        images?: people_images;
-        name?: string;
-      };
-      language?: string;
-    }>;
+    language?: string;
   }>;
+};
+
+export type anime_characters = {
+  data?: Array<anime_character>;
 };

@@ -1,6 +1,6 @@
 import React, { MouseEvent, useRef, useState } from "react";
 import { anime } from "../../generated/jikan";
-import CarouselItem from "../CarouselItem";
+import Image from "../Image";
 
 export interface CarouselProps {
   itemData: anime[] | undefined;
@@ -50,9 +50,15 @@ const Carousel: React.FC<CarouselProps> = ({
     }
   };
 
-  const carouselItemMap = carouselItemData!.map((carouselItem) => {
+  const carouselItemMap = carouselItemData.map((carouselItem) => {
     let currentCarouselItem = carouselItem;
-    return <CarouselItem animeData={currentCarouselItem} />;
+    return (
+      <Image
+        key={currentCarouselItem.mal_id}
+        animeData={currentCarouselItem}
+        preview
+      />
+    );
   });
 
   return (

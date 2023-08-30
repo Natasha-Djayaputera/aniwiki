@@ -2,14 +2,14 @@ import React, { MouseEvent } from "react";
 import Cover from "../../assets/placeholders/cover-mockup_1.jpg";
 import { anime } from "../../generated/jikan";
 
-export interface CarouselItemProps {
+export interface ImageProps {
   animeData: anime | undefined;
+  preview?: boolean;
 }
 
-const CarouselItem: React.FC<CarouselItemProps> = ({ animeData }) => {
-  //TODO make a preview for anime's details
-  const previewDetailPage = (e: MouseEvent<HTMLImageElement>) => {
-    console.log(`${animeData?.title_english}`);
+const Image: React.FC<ImageProps> = ({ animeData, preview = false }) => {
+  const showPreview = (e: MouseEvent<HTMLImageElement>) => {
+    window.location.href = `/anime/${animeData?.mal_id}`;
   };
 
   if (typeof animeData?.images?.jpg?.image_url === "string") {
@@ -19,7 +19,7 @@ const CarouselItem: React.FC<CarouselItemProps> = ({ animeData }) => {
         key={animeData.mal_id}
         src={animeData.images.jpg.image_url}
         alt={animeData.title_english ?? ""}
-        onMouseOver={previewDetailPage}
+        onMouseDown={preview ? showPreview : undefined}
       />
     );
   } else {
@@ -29,4 +29,4 @@ const CarouselItem: React.FC<CarouselItemProps> = ({ animeData }) => {
   }
 };
 
-export default CarouselItem;
+export default Image;

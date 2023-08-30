@@ -1,5 +1,7 @@
 import React from "react";
+import { titles } from "../../enum/titles";
 import { anime } from "../../generated/jikan";
+import { getFirstTitleOfType } from "../../helpers/title";
 
 export interface FeaturedProps {
   featuredData: anime | undefined;
@@ -10,6 +12,11 @@ const Featured: React.FC<FeaturedProps> = ({ featuredData }) => {
     return null;
   }
 
+  const defaultTitle = getFirstTitleOfType(
+    featuredData.titles,
+    titles.type.DEFAULT
+  );
+
   return (
     <div className="featured">
       <img
@@ -18,7 +25,7 @@ const Featured: React.FC<FeaturedProps> = ({ featuredData }) => {
         className="featured-background "
       />
       <div className="featured-body">
-        <h1>{`${featuredData.title_english}`}</h1>
+        <h1>{`${defaultTitle.title}`}</h1>
         <p className="ellipsis-multiline">{`${featuredData.synopsis}`}</p>
         <a href={`/anime/${featuredData.mal_id}`}>
           <i className="fa-solid fa-circle-info more-info-icon"></i>More Info

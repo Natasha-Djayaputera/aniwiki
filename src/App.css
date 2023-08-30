@@ -4,15 +4,37 @@
   --default-font-size: calc((0.2/16)*100vw);
   --default-font: 'Poppins', sans-serif;
   --default-side-padding: 3em;
+  --default-tag-padding: 0.25em .5em;
   --default-button-padding: 0.5em 1em;
   --default-button-border-radius: 0.3em;
   --default-ratio-height-size: calc((9/16) * 100vw);
   --default-letter-spacing: -.025em;
+  --default-float-right-width: 20em;
+  --default-link-like-color: deepskyblue;
 
   font-size: var(--default-font-size);
   font-weight: 300;
   box-sizing: border-box;
   letter-spacing: var(--default-letter-spacing);
+  color: white;
+}
+
+/* to fix 3rd party CSS framework box-sizing */
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+html, body, #root, .App {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--default-font);
+  background-color: black;
 }
 
 @keyframes header-scroll-down-color-animation {
@@ -39,23 +61,6 @@ h3 {
   font-variant-caps: all-petite-caps;
 }
 
-/* to fix 3rd party CSS framework box-sizing */
-*,
-::before,
-::after {
-  box-sizing: inherit;
-}
-
-html, body, #root, .App {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--default-font);
-  background-color: black;
-}
 
 header {
   position: sticky;
@@ -176,6 +181,7 @@ main {
   font-size: var(--default-font-size);
   padding-top: 4em;
   padding-bottom: 3em;
+  white-space: pre-wrap;
 }
 
 .featured {
@@ -185,9 +191,10 @@ main {
   flex-direction: column;
   width: 100%;
   height: var(--default-ratio-height-size);
+  max-height: calc(var(--default-ratio-height-size) * 0.85);
   overflow: hidden;
   margin-top: -4em;
-  margin-bottom: calc(var(--default-font-size) * -5);
+  margin-bottom: calc(var(--default-font-size) * -4);
 }
 
 .featured-background {
@@ -204,7 +211,7 @@ main {
   background-color: rgba(0,0,0,0.5);
   z-index: 100;
   padding: calc(var(--default-font-size) * 10) var(--default-side-padding);
-  padding-right: 40vw;
+  padding-right: 50vw;
   height: 100%;
   width: 100%;
   color: white;
@@ -264,7 +271,7 @@ main {
   width: 100%;
 }
 
-.content {
+.content-home {
   position: relative;
   z-index: 10;
   /* margin-top: calc(var(--default-font-size) * -5); */
@@ -344,11 +351,139 @@ main {
   background: blue;
 }
 
+.content {
+  /* background-color: rgba(50,220,50,0.5); */
+  color: white;
+  padding: 0.5em var(--default-side-padding);
+}
+
+.anime-page-grid {
+  display: grid;
+  grid-template-columns: 1fr var(--default-float-right-width);
+  column-gap: var(--default-side-padding);
+}
+
+.anime-info {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  /* border: 1px solid white; */
+  color: white;
+  width: var(--default-float-right-width);
+  background-color: rgba(255,255,255,0.1);
+}
+
+.anime-info > img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.anime-info > * + * {
+  margin-top: 1em;
+}
+
+.anime-info-grid {
+  display: grid;
+  grid-template-columns: 6em 9.5em;
+  grid-auto-rows: minmax(0.5em, auto);
+  grid-gap: 0.5em;
+}
+
+.anime-info-grid > * {
+  padding: 0;
+  margin: 0;
+  /* border: 1px solid white; */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 0.8em;
+}
+
+.anime-info-grid > p + h2 {
+  margin-top: 1.5em;
+}
+
+.grid-subtitle {
+  grid-column: 1 / -1;
+}
+
+.content h2 {
+  margin-bottom: 0;
+}
+
+iframe.trailer {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.relation {
+  font-weight: 700;
+}
+
+.relation-entry {
+  font-weight: initial;
+  color: var(--default-link-like-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.character-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(0.5em, auto);
+  grid-gap: 2em;
+}
+
+.character-grid > div:nth-child(even) {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.character-grid-item {
+  width: 100%;
+  /* border: 1px solid white; */
+}
+
+.character-grid-item > img {
+  width: 5em;
+  object-fit: cover;
+}
+
+.character-text {
+  width: 100%;
+  padding: 0 1em;
+  font-size: 0.7em;
+  justify-content: space-between;
+}
+
+.character-info {
+  align-self: flex-start;
+}
+
+.voice-actor-info {
+  align-self: flex-end;
+  text-align: end;
+}
+
+.character-info p:first-child, .voice-actor-info p:first-child {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.character-info p, .voice-actor-info p {
+  margin: .2em;
+  padding: 0;
+}
+
+/* Standalone CSS */
+
 .flex {
   display: flex;
   display: -ms-flexbox;
   display: -webkit-flex;
   width: 100%;
+}
+
+.column {
+  flex-direction: column;
 }
 
 .vertical-center{
@@ -362,4 +497,70 @@ main {
 
 .horizontal-left {
   justify-self: start;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.show-more {
+  text-align: right;
+  font-weight: 700;
+  color: var(--default-link-like-color);
+  cursor: pointer;
+}
+
+.disable {
+  text-decoration: none;
+  color: white;
+  pointer-events: none;
+  cursor: auto
+}
+
+.review > * {
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.tags {
+  display: block;
+  width: fit-content;
+  padding: var(--default-tag-padding);
+  background-color: #2f2f2f;
+  font-weight: 500;
+  border: 0;
+  border-radius: var(--default-button-border-radius);
+}
+
+.tags.not-recommended {
+  background-color: maroon;
+}
+
+.tags.recommended {
+  background-color: seagreen;
+}
+
+.flex-m > * + * {
+  margin-left: .5em;
+}
+
+.flex-m > *:last-child {
+  margin-right: auto;
+}
+
+@media (min-width: 1441px) {
+  /* Restrict maximum font size and adjust layout for screens wider than 1080px */
+
+  :root {
+    --default-font-size: calc((0.2/16)*1440px); /* Set a maximum font size for wider screens */
+  }
+
+  .featured-body {
+    padding-right: calc(50vw + (100vw - 1441px) * 0.5); /* Adjust padding for wider screens */
+  }
+
+  .content {
+    max-width: 1440px;
+    margin: auto;
+  }
 }
