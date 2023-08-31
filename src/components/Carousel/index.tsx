@@ -1,4 +1,4 @@
-import React, { MouseEvent, useRef, useState } from "react";
+import React, { MouseEvent, TouchEvent, useRef, useState } from "react";
 import { anime } from "../../generated/jikan";
 import Image from "../Image";
 
@@ -14,18 +14,18 @@ const Carousel: React.FC<CarouselProps> = ({
   const [prevPageX, setPrevPageX] = useState<number>(0);
   const [prevScrollLeft, setPrevScrollLeft] = useState<number>(0);
 
-  const dragStart = (e: MouseEvent<HTMLDivElement>): void => {
+  const dragStart = (e: TouchEvent<HTMLDivElement>): void => {
     // updating global variables value on mouse down event
     setIsDragStart(true);
-    setPrevPageX(e.pageX);
+    setPrevPageX(e.changedTouches[0].pageX);
     setPrevScrollLeft(e.currentTarget.scrollLeft);
   };
 
-  const dragging = (e: MouseEvent<HTMLDivElement>): void => {
+  const dragging = (e: TouchEvent<HTMLDivElement>): void => {
     // scrolling images/carousel to the left according to the mouse pointer
     if (!isDragStart) return;
     e.preventDefault();
-    const positionDiff = e.pageX - prevPageX;
+    const positionDiff = e.changedTouches[0].pageX - prevPageX;
     const target = carouselRef.current;
     if (target) {
       target.scrollLeft = prevScrollLeft - positionDiff;
@@ -69,9 +69,9 @@ const Carousel: React.FC<CarouselProps> = ({
       <div
         className={`carousel ${isDragStart ? "dragging" : ""}`}
         ref={carouselRef}
-        onMouseDown={dragStart}
-        onMouseMove={dragging}
-        onMouseUp={dragStop}
+        onTouchStart={dragStart}
+        onTouchMove={dragging}
+        onTouchEnd={dragStop}
       >
         {carouselItemMap}
       </div>

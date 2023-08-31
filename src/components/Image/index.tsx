@@ -1,4 +1,5 @@
 import React, { MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import Cover from "../../assets/placeholders/cover-mockup_1.jpg";
 import { anime } from "../../generated/jikan";
 
@@ -8,8 +9,11 @@ export interface ImageProps {
 }
 
 const Image: React.FC<ImageProps> = ({ animeData, preview = false }) => {
+  const navigate = useNavigate();
+
   const showPreview = (e: MouseEvent<HTMLImageElement>) => {
-    window.location.href = `/anime/${animeData?.mal_id}`;
+    e.stopPropagation();
+    navigate(`/?id=${animeData!.mal_id}`);
   };
 
   if (typeof animeData?.images?.jpg?.image_url === "string") {

@@ -70,7 +70,7 @@ const AnimeInfo: React.FC<AnimeInfoProps> = ({ animeData }) => {
         <p>Genres</p>
         <p>{joinPropertyOf(animeData.genres, "name")}</p>
 
-        <p>Theme</p>
+        <p>Themes</p>
         <p>{joinPropertyOf(animeData.themes, "name")}</p>
 
         <p>Demographic</p>
