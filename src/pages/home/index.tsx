@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useMemo, useState } from "react";
 import AnimePreview from "../../components/AnimePreview";
 import Carousel from "../../components/Carousel";
 import Featured from "../../components/Featured";
@@ -13,10 +12,9 @@ const HomePage: React.FC = () => {
   const topAiringAnime: anime[] | undefined = useTopAiringAnime();
   const currentSeasonAnime: anime[] | undefined = useCurrentSeasonAnime();
   const topUpcomingAnime: anime[] | undefined = useTopUpcomingAnime();
-  // const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(false);
-  const location = useLocation();
 
-  const isPreviewOpen = location.search.includes("id");
+  const [selectedId, setSelectedId] = useState<string | undefined>();
+  const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(false);
 
   const allAnime: anime[] = [
     ...(topAiringAnime ?? []),
@@ -29,13 +27,19 @@ const HomePage: React.FC = () => {
     [currentSeasonAnime]
   );
 
-  // useEffect(() => {
-  //   if (location.search.includes("id")) {
-  //     setIsPreviewOpen(true);
-  //   } else {
-  //     setIsPreviewOpen(false);
-  //   }
-  // }, [location.search]);
+  const selectedAnime = allAnime?.find(
+    (selectedAnime) => selectedAnime.mal_id === Number(selectedId)
+  );
+
+  const openPreview = (id: string) => {
+    setSelectedId(id);
+    setIsPreviewOpen(true);
+  };
+
+  const closePreview = () => {
+    setIsPreviewOpen(false);
+    setTimeout(() => setSelectedId(undefined), 300);
+  };
 
   return (
     <>
@@ -44,19 +48,26 @@ const HomePage: React.FC = () => {
         <div className="content-home">
           <div className="content-item">
             <h3>Top Airing Anime</h3>
-            <Carousel itemData={topAiringAnime} />
+            <Carousel itemData={topAiringAnime} onSelectItem={openPreview} />
           </div>
           <div className="content-item">
             <h3>Current Season Anime</h3>
-            <Carousel itemData={currentSeasonAnime} />
+            <Carousel
+              itemData={currentSeasonAnime}
+              onSelectItem={openPreview}
+            />
           </div>
           <div className="content-item">
             <h3>Top Upcoming Anime</h3>
-            <Carousel itemData={topUpcomingAnime} />
+            <Carousel itemData={topUpcomingAnime} onSelectItem={openPreview} />
           </div>
         </div>
       </main>
-      <AnimePreview isPreviewOpen={isPreviewOpen} animes={allAnime} />
+      <AnimePreview
+        isPreviewOpen={isPreviewOpen}
+        selectedAnime={selectedAnime}
+        onClose={closePreview}
+      />
     </>
   );
 };

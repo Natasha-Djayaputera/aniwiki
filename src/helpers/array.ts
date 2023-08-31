@@ -1,4 +1,4 @@
-import { UNDEFINED } from "./string";
+import { NOT_APPLICABLE } from "./string";
 
 /**
  * Retrieves a random element from an array.
@@ -33,6 +33,6 @@ export function joinPropertyOf<T>(
   joinDelimiter: delimiter = delimiter.LINEBREAK
 ): string {
   return array === undefined || array.length === 0
-    ? UNDEFINED
+    ? NOT_APPLICABLE
     : array.map((obj) => obj[property]).join(joinDelimiter);
 }

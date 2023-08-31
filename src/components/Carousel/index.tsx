@@ -4,10 +4,12 @@ import Image from "../Image";
 
 export interface CarouselProps {
   itemData: anime[] | undefined;
+  onSelectItem?: (id: string) => void;
 }
 
 const Carousel: React.FC<CarouselProps> = ({
   itemData: carouselItemData = [],
+  onSelectItem,
 }) => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isDragStart, setIsDragStart] = useState<boolean>(false);
@@ -56,6 +58,7 @@ const Carousel: React.FC<CarouselProps> = ({
       <Image
         key={currentCarouselItem.mal_id}
         animeData={currentCarouselItem}
+        onSelectItem={onSelectItem}
         preview
       />
     );

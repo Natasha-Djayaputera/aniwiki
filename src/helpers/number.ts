@@ -1,4 +1,4 @@
-import { UNDEFINED } from "./string";
+import { NOT_APPLICABLE } from "./string";
 
 /**
  * Adds thousand separators to a number and handles undefined and null values.
@@ -10,6 +10,6 @@ export function setThousandSeperatorTo(
   number: number | null | undefined
 ): string {
   return number === undefined || number === null
-    ? UNDEFINED
+    ? NOT_APPLICABLE
     : number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

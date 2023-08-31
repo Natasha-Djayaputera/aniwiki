@@ -1,6 +1,6 @@
 import { titles } from "../enum/titles";
 import { title } from "../generated/jikan";
-import { UNDEFINED } from "./string";
+import { NOT_APPLICABLE } from "./string";
 
 /**
  * Retrieves the first title object of a specific type from an array of titles.
@@ -14,11 +14,11 @@ export function getFirstTitleOfType(
   type: titles.type
 ): title {
   if (titles === undefined) {
-    return { title: UNDEFINED };
+    return { title: NOT_APPLICABLE };
   }
   const titleObject = titles.find((title) => title.type === type);
   if (titleObject === undefined) {
-    return { title: UNDEFINED };
+    return { title: NOT_APPLICABLE };
   }
   return titleObject;
 }
@@ -35,11 +35,11 @@ export function getTitlesOfType(
   type: titles.type
 ): title[] {
   if (titles === undefined) {
-    return [{ title: UNDEFINED }];
+    return [{ title: NOT_APPLICABLE }];
   }
   const titleObjects = titles.filter((title) => title.type === type);
   if (titleObjects === undefined || titleObjects.length === 0) {
-    return [{ title: UNDEFINED }];
+    return [{ title: NOT_APPLICABLE }];
   }
   return titleObjects;
 }
