@@ -1,17 +1,17 @@
 import React, { MouseEvent, TouchEvent, useRef, useState } from "react";
 import { anime } from "../../generated/jikan";
-import Image from "../Image";
+import AnimeImage from "../AnimeImage";
 
-export interface CarouselProps {
-  itemData: anime[] | undefined;
+export interface AnimeCarouselProps {
+  animesData: anime[] | undefined;
   onSelectItem?: (id: string) => void;
 }
 
-const Carousel: React.FC<CarouselProps> = ({
-  itemData: carouselItemData = [],
+const AnimeCarousel: React.FC<AnimeCarouselProps> = ({
+  animesData = [],
   onSelectItem,
 }) => {
-  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const animeCarouselRef = useRef<HTMLDivElement | null>(null);
   const [isDragStart, setIsDragStart] = useState<boolean>(false);
   const [prevPageX, setPrevPageX] = useState<number>(0);
   const [prevScrollLeft, setPrevScrollLeft] = useState<number>(0);
@@ -28,7 +28,7 @@ const Carousel: React.FC<CarouselProps> = ({
     if (!isDragStart) return;
     e.preventDefault();
     const positionDiff = e.changedTouches[0].pageX - prevPageX;
-    const target = carouselRef.current;
+    const target = animeCarouselRef.current;
     if (target) {
       target.scrollLeft = prevScrollLeft - positionDiff;
     }
@@ -39,23 +39,23 @@ const Carousel: React.FC<CarouselProps> = ({
   };
 
   const slideLeft = (e: MouseEvent<HTMLDivElement>) => {
-    const target = carouselRef.current;
+    const target = animeCarouselRef.current;
     if (target) {
       target.scrollLeft += -target.offsetWidth;
     }
   };
 
   const slideRight = (e: MouseEvent<HTMLDivElement>) => {
-    const target = carouselRef.current;
+    const target = animeCarouselRef.current;
     if (target) {
       target.scrollLeft += target.offsetWidth;
     }
   };
 
-  const carouselItemMap = carouselItemData.map((carouselItem) => {
+  const carouselItemMap = animesData.map((carouselItem) => {
     let currentCarouselItem = carouselItem;
     return (
-      <Image
+      <AnimeImage
         key={currentCarouselItem.mal_id}
         animeData={currentCarouselItem}
         onSelectItem={onSelectItem}
@@ -71,7 +71,7 @@ const Carousel: React.FC<CarouselProps> = ({
       </div>
       <div
         className={`carousel ${isDragStart ? "dragging" : ""}`}
-        ref={carouselRef}
+        ref={animeCarouselRef}
         onTouchStart={dragStart}
         onTouchMove={dragging}
         onTouchEnd={dragStop}
@@ -85,4 +85,4 @@ const Carousel: React.FC<CarouselProps> = ({
   );
 };
 
-export default Carousel;
+export default AnimeCarousel;

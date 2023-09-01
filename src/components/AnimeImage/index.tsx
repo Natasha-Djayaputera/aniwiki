@@ -1,15 +1,16 @@
 import React, { MouseEvent } from "react";
 import Cover from "../../assets/placeholders/cover-mockup_1.jpg";
 import { anime } from "../../generated/jikan";
-import { getNonUndefinedOrNullText } from "../../helpers/string";
+import { validateNumberInput } from "../../helpers/number";
+import { formatStringInput } from "../../helpers/string";
 
-export interface ImageProps {
+export interface AnimeImageProps {
   animeData: anime | undefined;
   preview?: boolean;
   onSelectItem?: (id: string) => void;
 }
 
-const Image: React.FC<ImageProps> = ({
+const AnimeImage: React.FC<AnimeImageProps> = ({
   animeData,
   preview = false,
   onSelectItem,
@@ -17,7 +18,7 @@ const Image: React.FC<ImageProps> = ({
   const showPreview = (e: MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     // navigate(`/?id=${animeData!.mal_id}`);
-    onSelectItem?.(getNonUndefinedOrNullText(animeData?.mal_id));
+    onSelectItem?.(formatStringInput(validateNumberInput(animeData?.mal_id)));
   };
 
   if (typeof animeData?.images?.jpg?.image_url === "string") {
@@ -37,4 +38,4 @@ const Image: React.FC<ImageProps> = ({
   }
 };
 
-export default Image;
+export default AnimeImage;

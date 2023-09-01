@@ -1,7 +1,7 @@
 import { anime_character } from "../../generated/jikan/models/anime_characters";
 
-export interface CharacterItemProps {
-  characterData: anime_character;
+export interface AnimeCharacterItemProps {
+  animeCharacterData: anime_character;
 }
 
 export const MALIMAGEPLACEHOLDERURL =
@@ -10,23 +10,26 @@ export const MALIMAGEPLACEHOLDERURL =
 export const IMAGEPLACEHOLDERURL =
   "https://upload.wikimedia.org/wikipedia/en/archive/b/b1/20210811082420%21Portrait_placeholder.png";
 
-const CharacterItem: React.FC<CharacterItemProps> = ({
-  characterData: data,
+const AnimeCharacterItem: React.FC<AnimeCharacterItemProps> = ({
+  animeCharacterData,
 }) => {
   if (
-    typeof data.character?.images?.jpg?.image_url === "string" &&
-    data.voice_actors !== undefined
+    typeof animeCharacterData.character?.images?.jpg?.image_url === "string" &&
+    animeCharacterData.voice_actors !== undefined
   ) {
     let characterImage = IMAGEPLACEHOLDERURL;
     let voiceActorLanguage = "";
     let voiceActorName = "";
     let voiceActorImage = IMAGEPLACEHOLDERURL;
 
-    if (data.character.images.jpg.image_url !== MALIMAGEPLACEHOLDERURL) {
-      characterImage = data.character.images.jpg.image_url;
+    if (
+      animeCharacterData.character.images.jpg.image_url !==
+      MALIMAGEPLACEHOLDERURL
+    ) {
+      characterImage = animeCharacterData.character.images.jpg.image_url;
     }
 
-    const japaneseVA = data.voice_actors.find(
+    const japaneseVA = animeCharacterData.voice_actors.find(
       (va) => va.language === "Japanese"
     );
 
@@ -46,8 +49,8 @@ const CharacterItem: React.FC<CharacterItemProps> = ({
         ></img>
         <div className="character-text flex column">
           <div className="character-info">
-            <p>{data.character.name}</p>
-            <p>{data.role}</p>
+            <p>{animeCharacterData.character.name}</p>
+            <p>{animeCharacterData.role}</p>
           </div>
           <div className="voice-actor-info">
             <p>{voiceActorName}</p>
@@ -66,4 +69,4 @@ const CharacterItem: React.FC<CharacterItemProps> = ({
   return null;
 };
 
-export default CharacterItem;
+export default AnimeCharacterItem;

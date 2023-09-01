@@ -1,15 +1,13 @@
-import { NOT_APPLICABLE } from "./string";
-
 /**
- * Adds thousand separators to a number and handles undefined and null values.
+ * Validates a number input, handling undefined and null values.
  * @param {number | null | undefined} number - The input number.
- * @returns {string} - The formatted number string with thousand separators,
- *                    or the UNDEFINED constant for undefined or null inputs.
+ * @returns {string} - The validated number as a string if it's not undefined or null,
+ *                    or an empty string otherwise.
  */
-export function setThousandSeperatorTo(
-  number: number | null | undefined
-): string {
-  return number === undefined || number === null
-    ? NOT_APPLICABLE
-    : number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export function validateNumberInput(number: number | null | undefined): string {
+  if (number === undefined || number === null) {
+    return "";
+  } else {
+    return number.toString();
+  }
 }

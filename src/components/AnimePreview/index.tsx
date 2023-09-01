@@ -3,13 +3,15 @@ import { Rating } from "react-simple-star-rating";
 import { titles } from "../../enum/titles";
 import { anime } from "../../generated/jikan";
 import { delimiter, joinPropertyOf } from "../../helpers/array";
+import { validateNumberInput } from "../../helpers/number";
 import {
-  getNonUndefinedOrNullText,
+  formatStringInput,
   setLowerCaseAndDashTo,
   setSentenceCaseTo,
+  validateStringInput,
 } from "../../helpers/string";
 import { getTitlesOfType } from "../../helpers/title";
-import Featured from "../Featured";
+import AnimeFeatured from "../AnimeFeatured";
 import Trailer from "../Trailer";
 
 export interface AnimePreviewProps {
@@ -52,17 +54,17 @@ const AnimePreview: React.FC<AnimePreviewProps> = ({
             <i className="fa-solid fa-xmark close-btn"></i>
           </div>
         </div>
-        <Featured featuredData={selectedAnime} />
+        <AnimeFeatured animeFeaturedData={selectedAnime} />
         <div className="anime-preview-content">
           <div className="flex column">
             <div className="flex space-between">
               <h2>{joinPropertyOf(japaneseTitle, "title")}</h2>
               <p
                 className={`tags horizontal-right ${setLowerCaseAndDashTo(
-                  getNonUndefinedOrNullText(selectedAnime?.status)
+                  validateStringInput(selectedAnime?.status)
                 )}`}
               >
-                {getNonUndefinedOrNullText(selectedAnime?.status)}
+                {formatStringInput(validateStringInput(selectedAnime?.status))}
               </p>
             </div>
             <p>
@@ -81,26 +83,35 @@ const AnimePreview: React.FC<AnimePreviewProps> = ({
             size={25}
           />
           <div className="flex flex-m vertical-center">
-            <p>{getNonUndefinedOrNullText(selectedAnime?.episodes)} Episodes</p>
+            <p>
+              {formatStringInput(validateNumberInput(selectedAnime?.episodes))}{" "}
+              Episodes
+            </p>
             <p>
               <b>
-                {getNonUndefinedOrNullText(
-                  setSentenceCaseTo(selectedAnime?.season)
+                {validateStringInput(setSentenceCaseTo(selectedAnime?.season))}
+              </b>
+            </p>
+            <p>
+              <b>
+                {formatStringInput(
+                  validateNumberInput(selectedAnime?.year),
+                  undefined,
+                  ""
                 )}
               </b>
             </p>
             <p>
-              <b>
-                {getNonUndefinedOrNullText(selectedAnime?.year, undefined, "")}
-              </b>
+              {formatStringInput(validateStringInput(selectedAnime?.rating))}
             </p>
-            <p>{getNonUndefinedOrNullText(selectedAnime?.rating)}</p>
           </div>
           <div className="grid-2">
             <div className="flex column">
               <p>
                 <b>Broadcast:</b>{" "}
-                {getNonUndefinedOrNullText(selectedAnime?.broadcast?.string)}
+                {formatStringInput(
+                  validateStringInput(selectedAnime?.broadcast?.string)
+                )}
               </p>
               <p>
                 <b>Demographics:</b>{" "}
@@ -122,15 +133,15 @@ const AnimePreview: React.FC<AnimePreviewProps> = ({
             <div className="flex column horizontal-right">
               <p>
                 <b>Rank:</b>{" "}
-                {getNonUndefinedOrNullText(
-                  selectedAnime?.rank,
+                {formatStringInput(
+                  validateNumberInput(selectedAnime?.rank),
                   `#${selectedAnime?.rank}`
                 )}
               </p>
               <p>
                 <b>Popularity:</b>{" "}
-                {getNonUndefinedOrNullText(
-                  selectedAnime?.popularity,
+                {formatStringInput(
+                  validateNumberInput(selectedAnime?.popularity),
                   `#${selectedAnime?.popularity}`
                 )}
               </p>{" "}

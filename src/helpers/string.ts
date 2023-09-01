@@ -29,22 +29,48 @@ export function setSentenceCaseTo(
 }
 
 /**
- * Converts a value to a string, handling undefined, null, and numbers.
- * @template T - The type of the input value.
- * @param {T | null | undefined} text - The input value.
- * @param {string | undefined} [formattedResultString] - The value to return for non-undefined and non-null inputs.
- * @param {string} [resultString=NOT_APPLICABLE] - The value to return for undefined or null inputs.
- * @returns {string} - The transformed string, or the formattedReturnString for non-undefined and non-null values,
- *                    or the resultString for undefined or null values.
+ * Adds thousand separators to a number and handles undefined and null values.
+ * @param {number | null | undefined} number - The input number.
+ * @returns {string} - The formatted number string with thousand separators,
+ *                    or an empty string for undefined or null inputs.
  */
-export function getNonUndefinedOrNullText<T>(
-  text: T | null | undefined,
+export function setThousandSeparatorTo(
+  number: number | null | undefined
+): string {
+  return number === undefined || number === null
+    ? ""
+    : number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/**
+ * Validates a string input, handling undefined and null values.
+ * @param {string | null | undefined} string - The input string.
+ * @returns {string} - The validated string if it's not undefined or null,
+ *                    or an empty string otherwise.
+ */
+export function validateStringInput(string: string | null | undefined): string {
+  if (string === undefined || string === null) {
+    return "";
+  } else {
+    return string;
+  }
+}
+
+/**
+ * Formats a string or number input, handling undefined and null values.
+ * @param {string | number} string - The input string or number.
+ * @param {string | undefined} formattedResultString - The formatted result string.
+ * @param {string} [resultString=UNDEFINED] - The value to return for undefined or null inputs.
+ * @returns {string} - The formatted string, or the resultString for undefined or null values.
+ */
+export function formatStringInput(
+  string: string | number,
   formattedResultString?: string | undefined,
   resultString = NOT_APPLICABLE
 ): string {
-  if (text === undefined || text === null) {
+  if (string === "") {
     return resultString;
   } else {
-    return formattedResultString ?? text.toString();
+    return formattedResultString ?? string.toString();
   }
 }

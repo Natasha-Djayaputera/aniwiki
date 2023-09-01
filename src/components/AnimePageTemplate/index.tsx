@@ -6,9 +6,9 @@ import {
   anime,
   top_anime_filter,
 } from "../../generated/jikan";
-import Carousel from "../Carousel";
+import AnimeCarousel from "../AnimeCarousel";
 
-const Page: React.FC = () => {
+const AnimePageTemplate: React.FC = () => {
   const [topAiringAnime, setTopAiringAnime] = useState<anime[] | undefined>();
   const [topUpcomingAnime, setTopUpcomingAnime] = useState<
     anime[] | undefined
@@ -66,19 +66,19 @@ const Page: React.FC = () => {
       <div className="content">
         <div className="content-item">
           <h3>Top Airing Anime</h3>
-          <Carousel itemData={topAiringAnime} />
+          <AnimeCarousel animesData={topAiringAnime} />
         </div>
         <div className="content-item">
           <h3>Current Season Anime</h3>
-          <Carousel itemData={currentSeasonAnime} />
+          <AnimeCarousel animesData={currentSeasonAnime} />
         </div>
         <div className="content-item">
           <h3>Top Upcoming Anime</h3>
-          <Carousel itemData={topUpcomingAnime} />
+          <AnimeCarousel animesData={topUpcomingAnime} />
         </div>
       </div>
     </main>
   );
 };
 
-export default Page;
+export default AnimePageTemplate;

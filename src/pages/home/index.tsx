@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
+import AnimeCarousel from "../../components/AnimeCarousel";
+import AnimeFeatured from "../../components/AnimeFeatured";
 import AnimePreview from "../../components/AnimePreview";
-import Carousel from "../../components/Carousel";
-import Featured from "../../components/Featured";
 import { anime } from "../../generated/jikan";
 import { getRandomElementOf } from "../../helpers/array";
 import { useCurrentSeasonAnime } from "../../hooks/useCurrentSeasonAnime";
@@ -44,22 +44,28 @@ const HomePage: React.FC = () => {
   return (
     <>
       <main>
-        <Featured featuredData={featuredAnime} />
+        <AnimeFeatured animeFeaturedData={featuredAnime} />
         <div className="content-home">
           <div className="content-item">
             <h3>Top Airing Anime</h3>
-            <Carousel itemData={topAiringAnime} onSelectItem={openPreview} />
+            <AnimeCarousel
+              animesData={topAiringAnime}
+              onSelectItem={openPreview}
+            />
           </div>
           <div className="content-item">
             <h3>Current Season Anime</h3>
-            <Carousel
-              itemData={currentSeasonAnime}
+            <AnimeCarousel
+              animesData={currentSeasonAnime}
               onSelectItem={openPreview}
             />
           </div>
           <div className="content-item">
             <h3>Top Upcoming Anime</h3>
-            <Carousel itemData={topUpcomingAnime} onSelectItem={openPreview} />
+            <AnimeCarousel
+              animesData={topUpcomingAnime}
+              onSelectItem={openPreview}
+            />
           </div>
         </div>
       </main>

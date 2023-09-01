@@ -1,10 +1,10 @@
 import { anime_full } from "../../generated/jikan";
 
-export interface RelationProp {
+export interface AnimeRelationProp {
   animeData: anime_full | undefined;
 }
 
-const Relation: React.FC<RelationProp> = ({ animeData }) => {
+const AnimeRelation: React.FC<AnimeRelationProp> = ({ animeData }) => {
   if (animeData === undefined) {
     return null;
   } else if (
@@ -41,4 +41,4 @@ const Relation: React.FC<RelationProp> = ({ animeData }) => {
   }
 };
 
-export default Relation;
+export default AnimeRelation;

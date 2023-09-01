@@ -1,20 +1,26 @@
 import { anime_reviews } from "../../generated/jikan";
-import ReviewItem from "../ReviewItem";
+import AnimeReviewItem from "../AnimeReviewItem";
 
-export interface ReviewProps {
+export interface AnimeReviewProps {
   title: string;
-  itemData: anime_reviews | undefined;
+  animeReviewsData: anime_reviews | undefined;
 }
 
-const Review: React.FC<ReviewProps> = ({ title, itemData }) => {
-  if (itemData === undefined) {
+const AnimeReview: React.FC<AnimeReviewProps> = ({
+  title,
+  animeReviewsData,
+}) => {
+  if (animeReviewsData === undefined) {
     return null;
   }
-  if (itemData.data === undefined || itemData.data?.length === 0) {
+  if (
+    animeReviewsData.data === undefined ||
+    animeReviewsData.data?.length === 0
+  ) {
     return null;
   }
 
-  const animeReviewMap = itemData.data
+  const animeReviewMap = animeReviewsData.data
     .sort((dataA, dataB) => {
       if (
         typeof dataA.reactions?.overall === "number" &&
@@ -30,7 +36,7 @@ const Review: React.FC<ReviewProps> = ({ title, itemData }) => {
       if (data === undefined) {
         return null;
       }
-      return <ReviewItem data={data} />;
+      return <AnimeReviewItem animeReviewData={data} />;
     });
 
   return (
@@ -42,4 +48,4 @@ const Review: React.FC<ReviewProps> = ({ title, itemData }) => {
   );
 };
 
-export default Review;
+export default AnimeReview;

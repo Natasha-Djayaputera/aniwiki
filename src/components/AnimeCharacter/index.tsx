@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { getNonUndefinedOrNullText } from "../../helpers/string";
+import { formatStringInput, validateStringInput } from "../../helpers/string";
 import { useAnimeCharacters } from "../../hooks/useAnimeCharacters";
-import CharacterItem from "../CharacterItem";
+import AnimeCharacterItem from "../AnimeCharacterItem";
 
-export interface CharacterProps {
-  id: number;
+export interface AnimeCharacterProps {
+  animeId: number;
 }
 
-const Character: React.FC<CharacterProps> = ({ id }) => {
+const AnimeCharacter: React.FC<AnimeCharacterProps> = ({ animeId }) => {
   const [isShowMore, setIsShowMore] = useState<boolean>(false);
-  const animeCharacter = useAnimeCharacters(id);
+  const animeCharacter = useAnimeCharacters(animeId);
 
   const toggleShowMore = () => {
     setIsShowMore(!isShowMore);
@@ -29,9 +29,11 @@ const Character: React.FC<CharacterProps> = ({ id }) => {
         .map((data) => {
           const currentData = data;
           return (
-            <CharacterItem
-              key={getNonUndefinedOrNullText(currentData.character?.name)}
-              characterData={currentData}
+            <AnimeCharacterItem
+              key={formatStringInput(
+                validateStringInput(currentData.character?.name)
+              )}
+              animeCharacterData={currentData}
             />
           );
         });
@@ -59,4 +61,4 @@ const Character: React.FC<CharacterProps> = ({ id }) => {
   }
 };
 
-export default Character;
+export default AnimeCharacter;

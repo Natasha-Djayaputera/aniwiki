@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
-import AnimeInfo from "../../components/AnimeInfo";
-import Character from "../../components/Character";
+import AnimeCharacter from "../../components/AnimeCharacter";
+import AnimeRelation from "../../components/AnimeRelation";
+import AnimeReview from "../../components/AnimeReview";
+import AnimeSidebarInfo from "../../components/AnimeSidebarInfo";
 import ContentItem from "../../components/ContentItem";
-import Relation from "../../components/Relation";
-import Review from "../../components/Review";
 import Trailer from "../../components/Trailer";
 import { titles } from "../../enum/titles";
 import { getFirstTitleOfType } from "../../helpers/title";
@@ -34,11 +34,11 @@ const AnimePage: React.FC = () => {
           <Trailer trailer={animeData.trailer} />
           <ContentItem itemTitle="Synopsis" itemData={animeData.synopsis} />
           <ContentItem itemTitle="Background" itemData={animeData.background} />
-          <Relation animeData={animeData} />
-          <Character id={id} />
-          <Review title="Latest Reviews" itemData={animeReviews} />
+          <AnimeRelation animeData={animeData} />
+          <AnimeCharacter animeId={id} />
+          <AnimeReview title="Latest Reviews" animeReviewsData={animeReviews} />
         </div>
-        <AnimeInfo animeData={animeData} />
+        <AnimeSidebarInfo animeData={animeData} />
       </div>
     </main>
   );

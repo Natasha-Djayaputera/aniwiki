@@ -1,4 +1,4 @@
-import { getNonUndefinedOrNullText } from "../../helpers/string";
+import { formatStringInput, validateStringInput } from "../../helpers/string";
 
 export interface ContentItemProps {
   itemTitle: string;
@@ -10,7 +10,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ itemTitle, itemData }) => {
     <>
       <h2>{itemTitle}</h2>
       <hr></hr>
-      <p>{getNonUndefinedOrNullText(itemData)}</p>
+      <p>{formatStringInput(validateStringInput(itemData))}</p>
     </>
   );
 };
