@@ -26,7 +26,11 @@ const AnimeReviewItem: React.FC<AnimeReviewItemProps> = ({
   }
 
   const reviewTagsMap = animeReviewData.tags?.map((tag) => {
-    return <p className={`tags ${setLowerCaseAndDashTo(tag)}`}>{tag}</p>;
+    return (
+      <p key={tag} className={`tags ${setLowerCaseAndDashTo(tag)}`}>
+        {tag}
+      </p>
+    );
   });
 
   return (

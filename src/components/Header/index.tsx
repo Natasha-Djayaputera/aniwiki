@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { setLowerCaseAndDashTo } from "../../helpers/string";
 import Logo from "../../logo.svg";
 
 const Header: React.FC = () => {
   const [pinned, setPinned] = useState("-unpinned");
+  const [searchInput, setSearchInput] = useState(""); // State to store the input value
 
   const listenScrollEvent = () => {
     if (window.scrollY > 1) {
       setPinned("-pinned");
     } else {
       setPinned("-unpinned");
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value); // Update the search input state
+  };
+
+  const handleSearch = () => {
+    if (searchInput.trim() !== "") {
+      window.location.href = `/search?q=${setLowerCaseAndDashTo(searchInput)}`;
+      // Check if the search input is not empty    }
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      // Listen for Enter key press
+      handleSearch();
     }
   };
 
@@ -36,13 +56,16 @@ const Header: React.FC = () => {
         </li>
       </ul>
       <div className="search-box horizontal-right">
-        <button className="btn-search">
+        <button className="btn-search" onClick={handleSearch}>
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
         <input
           type="text"
           className="input-search"
           placeholder="Type to Search..."
+          value={searchInput}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
         ></input>
       </div>
     </header>

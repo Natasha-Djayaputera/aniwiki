@@ -14,22 +14,20 @@ const AnimeRelation: React.FC<AnimeRelationProp> = ({ animeData }) => {
     return null;
   } else {
     const relationsMap = animeData.relations?.map((relations) => (
-      <p key={`${relations.relation}`} className="relation">
-        {relations.relation}
+      <div key={`${relations.relation}`} className="flex column">
+        <p className="relation">{relations.relation}</p>
         {relations.entry?.map((entry) => (
-          <div className="flex column">
-            <a
-              key={`${entry.mal_id}`}
-              className={`relation-entry ${
-                relations.relation === "Adaptation" ? "disable" : ""
-              }`}
-              href={`/anime/${entry.mal_id}`}
-            >
-              {entry.name}
-            </a>
-          </div>
+          <a
+            key={`${entry.mal_id}`}
+            className={`relation-entry ${
+              relations.relation === "Adaptation" ? "disable" : ""
+            }`}
+            href={`/anime/${entry.mal_id}`}
+          >
+            {entry.name}
+          </a>
         ))}
-      </p>
+      </div>
     ));
     return (
       <>

@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AnimeCharacter from "../../components/AnimeCharacter";
 import AnimeRelation from "../../components/AnimeRelation";
 import AnimeReview from "../../components/AnimeReview";
@@ -11,10 +11,9 @@ import { useAnimeReviews } from "../../hooks/useAnimeReviews";
 import { useFullAnime } from "../../hooks/useFullAnime";
 
 const AnimePage: React.FC = () => {
-  const path = useLocation();
-  const id = Number(path.pathname.split("/").pop());
-  const animeData = useFullAnime(id);
-  const animeReviews = useAnimeReviews(id);
+  const { id } = useParams();
+  const animeData = useFullAnime(Number(id));
+  const animeReviews = useAnimeReviews(Number(id));
   console.log(animeData);
 
   if (animeData === undefined) {
@@ -35,7 +34,7 @@ const AnimePage: React.FC = () => {
           <ContentItem itemTitle="Synopsis" itemData={animeData.synopsis} />
           <ContentItem itemTitle="Background" itemData={animeData.background} />
           <AnimeRelation animeData={animeData} />
-          <AnimeCharacter animeId={id} />
+          <AnimeCharacter animeId={Number(id)} />
           <AnimeReview title="Latest Reviews" animeReviewsData={animeReviews} />
         </div>
         <AnimeSidebarInfo animeData={animeData} />

@@ -36,7 +36,7 @@ const AnimeReview: React.FC<AnimeReviewProps> = ({
       if (data === undefined) {
         return null;
       }
-      return <AnimeReviewItem animeReviewData={data} />;
+      return <AnimeReviewItem key={data.mal_id} animeReviewData={data} />;
     });
 
   return (
