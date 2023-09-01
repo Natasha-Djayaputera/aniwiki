@@ -87,20 +87,17 @@ const AnimePreview: React.FC<AnimePreviewProps> = ({
               {formatStringInput(validateNumberInput(selectedAnime?.episodes))}{" "}
               Episodes
             </p>
-            <p>
-              <b>
-                {validateStringInput(setSentenceCaseTo(selectedAnime?.season))}
-              </b>
-            </p>
-            <p>
-              <b>
-                {formatStringInput(
-                  validateNumberInput(selectedAnime?.year),
-                  undefined,
-                  ""
-                )}
-              </b>
-            </p>
+            {typeof selectedAnime?.season === "string" && (
+              <p>
+                <b>{setSentenceCaseTo(selectedAnime?.season)}</b>
+              </p>
+            )}
+            {typeof selectedAnime?.year === "number" && (
+              <p>
+                <b>{selectedAnime?.year}</b>
+              </p>
+            )}
+
             <p>
               {formatStringInput(validateStringInput(selectedAnime?.rating))}
             </p>
