@@ -39,32 +39,30 @@ const AnimePageTemplate: React.FC<AnimePageTemplateProps> = ({
   };
 
   return (
-    <main>
-      <div className="content">
-        <h1>{title}</h1>
-        <div className="flex column page-item">{animePageItemMap}</div>
-        <div className="flex space-around">
-          {currentPage !== 1 && (
-            <a
-              className="button-style"
-              href={`${location.pathname}?${searchParams.toString()}`}
-              onClick={goPrevPage}
-            >
-              Prev Page
-            </a>
-          )}
-          {!isLastPage && (
-            <a
-              className="button-style"
-              href={`${location.pathname}?${searchParams.toString()}`}
-              onClick={goNextPage}
-            >
-              Next Page
-            </a>
-          )}
-        </div>
+    <>
+      <h1>{title}</h1>
+      <div className="flex column page-item">{animePageItemMap}</div>
+      <div className="flex space-around">
+        {currentPage !== 1 && (
+          <a
+            className="button-style"
+            href={`${location.pathname}?${searchParams.toString()}`}
+            onClick={goPrevPage}
+          >
+            Prev Page
+          </a>
+        )}
+        {!isLastPage && (
+          <a
+            className="button-style"
+            href={`${location.pathname}?${searchParams.toString()}`}
+            onClick={goNextPage}
+          >
+            Next Page
+          </a>
+        )}
       </div>
-    </main>
+    </>
   );
 };
 

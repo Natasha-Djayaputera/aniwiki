@@ -17,12 +17,16 @@ const AnimeTopPage: React.FC = () => {
   const currentPage = topAnimeResult.pagination?.current_page;
 
   return (
-    <AnimeTemplatePage
-      currentPage={currentPage}
-      isLastPage={isLastPage}
-      title={"Top Anime Series"}
-      animesData={topAnime}
-    />
+    <main>
+      <div className="content">
+        <AnimeTemplatePage
+          currentPage={currentPage}
+          isLastPage={isLastPage}
+          title={"Top Anime Series"}
+          animesData={topAnime}
+        />
+      </div>
+    </main>
   );
 };
 
