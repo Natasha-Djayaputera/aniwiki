@@ -14,7 +14,6 @@ const AnimePage: React.FC = () => {
   const { id } = useParams();
   const animeData = useFullAnime(Number(id));
   const animeReviews = useAnimeReviews(Number(id));
-  console.log(animeData);
 
   if (animeData === undefined) {
     return null;
