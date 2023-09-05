@@ -46,27 +46,33 @@ const HomePage: React.FC = () => {
       <main>
         <AnimeFeatured animeFeaturedData={featuredAnime} />
         <div className="content-home">
-          <div className="content-item">
-            <h3>Top Airing Anime</h3>
-            <AnimeCarousel
-              animesData={topAiringAnime}
-              onSelectItem={openPreview}
-            />
-          </div>
-          <div className="content-item">
-            <h3>Current Season Anime</h3>
-            <AnimeCarousel
-              animesData={currentSeasonAnime}
-              onSelectItem={openPreview}
-            />
-          </div>
-          <div className="content-item">
-            <h3>Top Upcoming Anime</h3>
-            <AnimeCarousel
-              animesData={topUpcomingAnime}
-              onSelectItem={openPreview}
-            />
-          </div>
+          {topAiringAnime && (
+            <div className="content-item">
+              <h3>Top Airing Anime</h3>
+              <AnimeCarousel
+                animesData={topAiringAnime}
+                onSelectItem={openPreview}
+              />
+            </div>
+          )}
+          {currentSeasonAnime && (
+            <div className="content-item">
+              <h3>Current Season Anime</h3>
+              <AnimeCarousel
+                animesData={currentSeasonAnime}
+                onSelectItem={openPreview}
+              />
+            </div>
+          )}
+          {topUpcomingAnime && (
+            <div className="content-item">
+              <h3>Top Upcoming Anime</h3>
+              <AnimeCarousel
+                animesData={topUpcomingAnime}
+                onSelectItem={openPreview}
+              />
+            </div>
+          )}
         </div>
       </main>
       <AnimePreview
