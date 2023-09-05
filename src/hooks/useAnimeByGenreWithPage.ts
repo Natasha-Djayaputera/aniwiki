@@ -8,8 +8,6 @@ export function useAnimeByGenreWithPage(
   const [searchedAnimeByGenreWithPage, setSearchedAnimeByGenreWithPage] =
     useState<anime_search | undefined>();
 
-  console.log(genres, page);
-
   const getAnimeSearchByGenreWithPage = async () => {
     try {
       const response = await AnimeService.getAnimeSearch({

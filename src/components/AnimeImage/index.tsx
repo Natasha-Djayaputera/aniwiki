@@ -1,8 +1,10 @@
 import React, { MouseEvent } from "react";
 import Cover from "../../assets/placeholders/cover-mockup_1.jpg";
+import { TitleType } from "../../enum/titles";
 import { anime } from "../../generated/jikan";
 import { validateNumberInput } from "../../helpers/number";
 import { formatStringInput } from "../../helpers/string";
+import { getFirstTitleOfType } from "../../helpers/title";
 
 export interface AnimeImageProps {
   animeData: anime | undefined;
@@ -17,9 +19,13 @@ const AnimeImage: React.FC<AnimeImageProps> = ({
 }) => {
   const showPreview = (e: MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
-    // navigate(`/?id=${animeData!.mal_id}`);
     onSelectItem?.(formatStringInput(validateNumberInput(animeData?.mal_id)));
   };
+
+  const defaultTitle = getFirstTitleOfType(
+    animeData?.titles,
+    TitleType.DEFAULT
+  );
 
   if (typeof animeData?.images?.jpg?.image_url === "string") {
     return (
@@ -27,7 +33,7 @@ const AnimeImage: React.FC<AnimeImageProps> = ({
         id={`${animeData.mal_id}`}
         key={animeData.mal_id}
         src={animeData.images.jpg.image_url}
-        alt={animeData.title_english ?? ""}
+        alt={defaultTitle.title}
         onMouseDown={preview ? showPreview : undefined}
       />
     );
