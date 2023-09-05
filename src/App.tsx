@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import AnimePage from "./pages/anime";
+import AnimeGenrePage from "./pages/animeGenre";
 import AnimeSearchPage from "./pages/animeSearch";
 import AnimeSeasonalPage from "./pages/animeSeasonal";
 import AnimeTopPage from "./pages/animeTop";
@@ -24,6 +25,11 @@ const App: React.FC = () => {
             caseSensitive
             path="/anime/seasonal"
             Component={AnimeSeasonalPage}
+          ></Route>
+          <Route
+            caseSensitive
+            path="/anime/genre"
+            Component={AnimeGenrePage}
           ></Route>
           <Route
             caseSensitive

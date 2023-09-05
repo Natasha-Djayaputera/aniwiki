@@ -596,12 +596,24 @@ iframe.trailer {
   font-size: 1.2em;
 }
 
+.genres a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
 
 /* Standalone CSS */
 
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-gap: .5em;
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: .5em;
 }
 
@@ -694,7 +706,7 @@ iframe.trailer {
   font-weight: 500;
   border: 0;
   border-radius: var(--default-button-border-radius);
-  height:max-content;
+  height: max-content;
 }
 
 .tags.not-recommended, .tags.not-yet-aired  {
