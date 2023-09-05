@@ -1,6 +1,6 @@
 import { MouseEvent } from "react";
 import { Rating } from "react-simple-star-rating";
-import { titles } from "../../enum/titles";
+import { TitleType } from "../../enum/titles";
 import { anime } from "../../generated/jikan";
 import { delimiter, joinPropertyOf } from "../../helpers/array";
 import { validateNumberInput } from "../../helpers/number";
@@ -27,11 +27,11 @@ const AnimePreview: React.FC<AnimePreviewProps> = ({
 }) => {
   const synonymsTitle = getTitlesOfType(
     selectedAnime?.titles,
-    titles.type.SYNONYM
+    TitleType.SYNONYM
   );
   const japaneseTitle = getTitlesOfType(
     selectedAnime?.titles,
-    titles.type.JAPANESE
+    TitleType.JAPANESE
   );
 
   const stopPropagation = (e: MouseEvent<HTMLDivElement>) => {

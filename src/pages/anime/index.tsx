@@ -5,7 +5,7 @@ import AnimeReview from "../../components/AnimeReview";
 import AnimeSidebarInfo from "../../components/AnimeSidebarInfo";
 import ContentItem from "../../components/ContentItem";
 import Trailer from "../../components/Trailer";
-import { titles } from "../../enum/titles";
+import { TitleType } from "../../enum/titles";
 import { getFirstTitleOfType } from "../../helpers/title";
 import { useAnimeReviews } from "../../hooks/useAnimeReviews";
 import { useFullAnime } from "../../hooks/useFullAnime";
@@ -20,10 +20,7 @@ const AnimePage: React.FC = () => {
     return null;
   }
 
-  const defaultTitle = getFirstTitleOfType(
-    animeData.titles,
-    titles.type.DEFAULT
-  );
+  const defaultTitle = getFirstTitleOfType(animeData.titles, TitleType.DEFAULT);
 
   return (
     <main>

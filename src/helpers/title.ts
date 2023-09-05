@@ -1,4 +1,4 @@
-import { titles } from "../enum/titles";
+import { TitleType } from "../enum/titles";
 import { title } from "../generated/jikan";
 import { NOT_APPLICABLE } from "./string";
 
@@ -11,7 +11,7 @@ import { NOT_APPLICABLE } from "./string";
  */
 export function getFirstTitleOfType(
   titles: title[] | undefined,
-  type: titles.type
+  type: TitleType
 ): title {
   if (titles === undefined) {
     return { title: NOT_APPLICABLE };
@@ -32,7 +32,7 @@ export function getFirstTitleOfType(
  */
 export function getTitlesOfType(
   titles: title[] | undefined,
-  type: titles.type
+  type: TitleType
 ): title[] {
   if (titles === undefined) {
     return [{ title: NOT_APPLICABLE }];

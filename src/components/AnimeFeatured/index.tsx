@@ -1,5 +1,5 @@
 import React from "react";
-import { titles } from "../../enum/titles";
+import { TitleType } from "../../enum/titles";
 import { anime } from "../../generated/jikan";
 import { getFirstTitleOfType } from "../../helpers/title";
 
@@ -14,7 +14,7 @@ const AnimeFeatured: React.FC<AnimeFeaturedProps> = ({ animeFeaturedData }) => {
 
   const defaultTitle = getFirstTitleOfType(
     animeFeaturedData.titles,
-    titles.type.DEFAULT
+    TitleType.DEFAULT
   );
 
   return (

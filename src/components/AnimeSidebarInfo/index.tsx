@@ -1,5 +1,5 @@
 import React from "react";
-import { titles } from "../../enum/titles";
+import { TitleType } from "../../enum/titles";
 import { anime_full } from "../../generated/jikan";
 import { joinPropertyOf } from "../../helpers/array";
 import { getDefaultDateFormat } from "../../helpers/datetime";
@@ -18,8 +18,8 @@ export interface AnimeSidebarInfoProps {
 }
 
 const AnimeSidebarInfo: React.FC<AnimeSidebarInfoProps> = ({ animeData }) => {
-  const synonymsTitle = getTitlesOfType(animeData.titles, titles.type.SYNONYM);
-  const japaneseTitle = getTitlesOfType(animeData.titles, titles.type.JAPANESE);
+  const synonymsTitle = getTitlesOfType(animeData.titles, TitleType.SYNONYM);
+  const japaneseTitle = getTitlesOfType(animeData.titles, TitleType.JAPANESE);
 
   return (
     <div className="anime-info">

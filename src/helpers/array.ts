@@ -17,6 +17,7 @@ export function getRandomElementOf<T>(array: T[]): T | undefined {
 export enum delimiter {
   COMMA = ", ",
   LINEBREAK = "\n",
+  SPACE = " ",
 }
 
 /**
