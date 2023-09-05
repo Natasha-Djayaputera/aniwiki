@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import AnimeTemplatePage from "../../components/AnimeTemplatePage";
 import ShowMore from "../../components/ShowMore";
@@ -33,7 +33,7 @@ const AnimeGenrePage: React.FC = () => {
   };
 
   const animeGenresMap = sortedAnimeGenres
-    ?.slice(0, isShowMore ? -1 : 10)
+    ?.slice(0, !isShowMore ? 10 : -1)
     .map((genre) => {
       const setGenre = () => {
         setSearchParams((params) => {
@@ -53,25 +53,19 @@ const AnimeGenrePage: React.FC = () => {
       );
     });
 
-  useEffect(() => {
-    if (typeof currentGenre?.name === "string") {
-      setIsShowMore(false);
-    }
-  }, [currentGenre]);
-
   return (
     <main>
       <div className="content">
         <h1>Genres</h1>
         <div className="grid-5 genres">{animeGenresMap}</div>
-        {typeof currentGenre?.name === "string" && (
+        {searchAnimesResult !== undefined && (
           <ShowMore isShowMore={isShowMore} toggleShowMore={toggleShowMore} />
         )}
-        {typeof currentGenre?.name === "string" && (
+        {searchAnimesResult !== undefined && (
           <AnimeTemplatePage
             currentPage={currentPage}
             isLastPage={isLastPage}
-            title={currentGenre.name}
+            title={currentGenre?.name ?? ""}
             animesData={searchAnimes}
           />
         )}

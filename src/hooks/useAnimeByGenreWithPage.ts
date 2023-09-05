@@ -10,6 +10,9 @@ export function useAnimeByGenreWithPage(
 
   const getAnimeSearchByGenreWithPage = async () => {
     try {
+      if (genres === "") {
+        return;
+      }
       const response = await AnimeService.getAnimeSearch({
         genres,
         page,
