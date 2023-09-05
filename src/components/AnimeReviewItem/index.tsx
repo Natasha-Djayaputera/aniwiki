@@ -7,6 +7,7 @@ import {
   setLowerCaseAndDashTo,
   validateStringInput,
 } from "../../helpers/string";
+import ShowMore from "../ShowMore";
 
 export interface AnimeReviewItemProps {
   animeReviewData: anime_review | undefined;
@@ -54,16 +55,7 @@ const AnimeReviewItem: React.FC<AnimeReviewItemProps> = ({
       <p className={`${isShowMore ? "" : "ellipsis-multiline"}`}>
         {formatStringInput(validateStringInput(animeReviewData.review))}
       </p>
-      {!isShowMore && (
-        <p className="show-more" onClick={toggleShowMore}>
-          Show more...
-        </p>
-      )}
-      {isShowMore && (
-        <p className="show-more" onClick={toggleShowMore}>
-          Show less...
-        </p>
-      )}
+      <ShowMore isShowMore={isShowMore} toggleShowMore={toggleShowMore} />
       <hr />
     </>
   );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { formatStringInput, validateStringInput } from "../../helpers/string";
 import { useAnimeCharacters } from "../../hooks/useAnimeCharacters";
 import AnimeCharacterItem from "../AnimeCharacterItem";
+import ShowMore from "../ShowMore";
 
 export interface AnimeCharacterProps {
   animeId: number;
@@ -43,16 +44,7 @@ const AnimeCharacter: React.FC<AnimeCharacterProps> = ({ animeId }) => {
           <h2>Characters & Voice Actors</h2>
           <hr></hr>
           <div className="character-grid">{characterItemMap}</div>
-          {!isShowMore && (
-            <p className="show-more" onClick={toggleShowMore}>
-              Show more...
-            </p>
-          )}
-          {isShowMore && (
-            <p className="show-more" onClick={toggleShowMore}>
-              Show less...
-            </p>
-          )}
+          <ShowMore isShowMore={isShowMore} toggleShowMore={toggleShowMore} />
         </>
       );
     }
