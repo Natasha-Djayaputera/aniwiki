@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
 import { AnimeService, anime_search } from "../generated/jikan";
 
-export function useAnimeSearch(title: string): anime_search | undefined {
-  const [searchedAnime, setSearchedAnime] = useState<
+export function useAnimeSearchWithPage(
+  title: string,
+  page: number = 1
+): anime_search | undefined {
+  const [searchedAnimeWithPage, setSearchedAnimeWithPage] = useState<
     anime_search | undefined
   >();
 
-  const getAnimeSearch = async () => {
+  const getAnimeSearchWithPage = async () => {
     try {
       const response = await AnimeService.getAnimeSearch({
         q: title,
+        page,
       });
 
-      setSearchedAnime(response);
+      setSearchedAnimeWithPage(response);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    getAnimeSearch();
+    getAnimeSearchWithPage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return searchedAnime;
+  return searchedAnimeWithPage;
 }

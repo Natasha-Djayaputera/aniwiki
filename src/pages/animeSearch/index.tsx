@@ -1,21 +1,31 @@
 import { useSearchParams } from "react-router-dom";
-import { useAnimeSearch } from "../../hooks/useAnimeSearch";
+import AnimeTemplatePage from "../../components/AnimeTemplatePage";
+import { useAnimeSearchWithPage } from "../../hooks/useAnimeSearchWithPage";
 
 const AnimeSearchPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const title = searchParams.get("q");
-  const searchAnimes = useAnimeSearch(title ?? "");
-  const animeData = searchAnimes?.data?.[0];
-  if (animeData === undefined) {
+  const page = searchParams.get("page");
+  const searchAnimesResult = useAnimeSearchWithPage(
+    title ?? "",
+    page === null ? 1 : Number(page)
+  );
+
+  if (searchAnimesResult === undefined) {
     return null;
-  } else {
-    window.location.href = `/anime/${animeData.mal_id}`;
   }
 
+  const searchAnimes = searchAnimesResult.data;
+  const isLastPage = !searchAnimesResult.pagination?.has_next_page;
+  const currentPage = searchAnimesResult.pagination?.current_page;
+
   return (
-    <main>
-      <div className="content anime-page-grid"></div>
-    </main>
+    <AnimeTemplatePage
+      currentPage={currentPage}
+      isLastPage={isLastPage}
+      title={"Search Result"}
+      animesData={searchAnimes}
+    />
   );
 };
 

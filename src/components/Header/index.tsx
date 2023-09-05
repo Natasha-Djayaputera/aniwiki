@@ -43,16 +43,16 @@ const Header: React.FC = () => {
       </a>
       <ul className="site-nav">
         <li>
-          <a href="/top">Top</a>
+          <a href="/anime/top">Top</a>
         </li>
         <li>
-          <a href="/seasonal">Seasonal</a>
+          <a href="/anime/seasonal">Seasonal</a>
         </li>
         <li>
-          <a href="/genre">Genre</a>
+          <a href="/anime/genre">Genre</a>
         </li>
         <li>
-          <a href="/recommendation">Recommendation</a>
+          <a href="/anime/recommendation">Recommendation</a>
         </li>
       </ul>
       <div className="search-box horizontal-right">
