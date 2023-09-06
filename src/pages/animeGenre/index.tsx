@@ -6,7 +6,7 @@ import { useAnimeByGenreWithPage } from "../../hooks/useAnimeByGenreWithPage";
 import { useAnimeGenres } from "../../hooks/useAnimeGenres";
 
 const AnimeGenrePage: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const location = useLocation();
   const genreParam = searchParams.get("genre");
   const pageParam = searchParams.get("page");
@@ -35,18 +35,10 @@ const AnimeGenrePage: React.FC = () => {
   const animeGenresMap = sortedAnimeGenres
     ?.slice(0, !isShowMore ? 10 : -1)
     .map((genre) => {
-      const setGenre = () => {
-        setSearchParams((params) => {
-          params.set("genre", genre.mal_id?.toString() ?? "");
-          params.set("page", "1");
-          return params;
-        });
-      };
       return (
         <a
-          href={`${location.pathname}?${searchParams.toString()}`}
+          href={`${location.pathname}?genre=${genre.mal_id}&page=1`}
           key={genre.name}
-          onClick={setGenre}
         >
           {genre.name} ({genre.count})
         </a>
