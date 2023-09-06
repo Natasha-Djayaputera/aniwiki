@@ -580,6 +580,11 @@ iframe.trailer {
   cursor: pointer;
 }
 
+.page-item-grid:hover {
+  scale: 1.1;
+  transition: all .05s ease-in-out;
+}
+
 .page-item-grid img{
   width: 10em;
   aspect-ratio: 10.5/14.8;
@@ -602,8 +607,49 @@ iframe.trailer {
   font-weight: 500;
 }
 
+.genres a:hover {
+  scale: 1.05;
+  font-weight: 700;
+  transition: all .05s ease-in-out;
+}
+
+
+.recommendation {
+  gap: 2em;
+}
+
+.recommendation > * {
+  padding: 2em 1em 1em ;
+}
+
+.recommendation * {
+  gap: 1em;
+}
+
+.recommendation > *:nth-child(odd) {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.recommendation img{
+  width: 5em;
+  aspect-ratio: 10.5/14.8;
+  object-fit: cover;
+}
+
+.recommendation b {
+  font-size: 1.3em;
+}
+
+.recommendation-item:hover {
+  scale: 1.1;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+}
 
 /* Standalone CSS */
+.cursor-pointer {
+  cursor: pointer;
+}
 
 .grid-2 {
   display: grid;
@@ -684,6 +730,10 @@ iframe.trailer {
   border-radius: var(--default-button-border-radius);
   cursor: pointer;
   margin-top: 1em;
+}
+
+.button-style:hover {
+  transition: all .1s ease-in-out;
 }
 
 .disable {
