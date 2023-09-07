@@ -9,11 +9,7 @@ import type { anime_episodes } from "../models/anime_episodes";
 import type { anime_full } from "../models/anime_full";
 import type { anime_news } from "../models/anime_news";
 import type { anime_reviews } from "../models/anime_reviews";
-import type { anime_search } from "../models/anime_search";
-import type { anime_search_query_orderby } from "../models/anime_search_query_orderby";
-import type { anime_search_query_rating } from "../models/anime_search_query_rating";
-import type { anime_search_query_status } from "../models/anime_search_query_status";
-import type { anime_search_query_type } from "../models/anime_search_query_type";
+import type { anime_search, anime_search_param } from "../models/anime_search";
 import type { anime_staff } from "../models/anime_staff";
 import type { anime_statistics } from "../models/anime_statistics";
 import type { anime_themes } from "../models/anime_themes";
@@ -26,7 +22,6 @@ import type { forum } from "../models/forum";
 import type { moreinfo } from "../models/moreinfo";
 import type { pictures_variants } from "../models/pictures_variants";
 import type { relation } from "../models/relation";
-import type { search_query_sort } from "../models/search_query_sort";
 
 import type { CancelablePromise } from "../core/CancelablePromise";
 import { OpenAPI } from "../core/OpenAPI";
@@ -518,61 +513,7 @@ export class AnimeService {
     producers,
     startDate,
     endDate,
-  }: {
-    /**
-     * 'Safe For Work'. This is a flag. When supplied it will filter out entries according to the SFW Policy. You do not need to pass a value to it. e.g usage: `?sfw`
-     */
-    sfw?: boolean;
-    /**
-     * This is a flag. When supplied it will include entries which are unapproved. Unapproved entries on MyAnimeList are those that are user submitted and have not yet been approved by MAL to show up on other pages. They will have their own specifc pages and are often removed resulting in a 404 error. You do not need to pass a value to it. e.g usage: `?unapproved`
-     */
-    unapproved?: boolean;
-    page?: number;
-    limit?: number;
-    q?: string;
-    type?: anime_search_query_type;
-    score?: number;
-    /**
-     * Set a minimum score for results.
-     */
-    minScore?: number;
-    /**
-     * Set a maximum score for results
-     */
-    maxScore?: number;
-    status?: anime_search_query_status;
-    rating?: anime_search_query_rating;
-    /**
-     * Filter out Adult entries
-     */
-
-    /**
-     * Filter by genre(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
-     */
-    genres?: string;
-    /**
-     * Exclude genre(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
-     */
-    genresExclude?: string;
-    orderBy?: anime_search_query_orderby;
-    sort?: search_query_sort;
-    /**
-     * Return entries starting with the given letter
-     */
-    letter?: string;
-    /**
-     * Filter by producer(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
-     */
-    producers?: string;
-    /**
-     * Filter by starting date. Format: YYYY-MM-DD. e.g `2022`, `2005-05`, `2005-01-01`
-     */
-    startDate?: string;
-    /**
-     * Filter by ending date. Format: YYYY-MM-DD. e.g `2022`, `2005-05`, `2005-01-01`
-     */
-    endDate?: string;
-  }): CancelablePromise<anime_search> {
+  }: anime_search_param): CancelablePromise<anime_search> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/anime",

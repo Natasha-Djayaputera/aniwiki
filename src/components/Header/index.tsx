@@ -20,7 +20,9 @@ const Header: React.FC = () => {
 
   const handleSearch = () => {
     if (searchInput.trim() !== "") {
-      window.location.href = `/search?q=${setLowerCaseAndDashTo(searchInput)}`;
+      window.location.href = `/anime/search?q=${setLowerCaseAndDashTo(
+        searchInput
+      )}`;
       // Check if the search input is not empty    }
     }
   };
@@ -53,6 +55,9 @@ const Header: React.FC = () => {
         </li>
         <li>
           <a href="/anime/recommendation">Recommendation</a>
+        </li>
+        <li>
+          <a href="/anime/search/advanced">Search</a>
         </li>
       </ul>
       <div className="search-box horizontal-right">

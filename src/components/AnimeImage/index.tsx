@@ -34,6 +34,7 @@ const AnimeImage: React.FC<AnimeImageProps> = ({
         key={animeData.mal_id}
         src={animeData.images.jpg.image_url}
         alt={defaultTitle.title}
+        title={defaultTitle.title}
         onMouseDown={preview ? showPreview : undefined}
       />
     );
