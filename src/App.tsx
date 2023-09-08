@@ -6,7 +6,6 @@ import AnimePage from "./pages/anime";
 import AnimeAdvancedSearchPage from "./pages/animeAdvancedSearch";
 import AnimeGenrePage from "./pages/animeGenre";
 import AnimeRecommendationPage from "./pages/animeRecommendation";
-import AnimeSearchPage from "./pages/animeSearch";
 import AnimeSeasonalPage from "./pages/animeSeasonal";
 import AnimeTopPage from "./pages/animeTop";
 import HomePage from "./pages/home";
@@ -52,13 +51,8 @@ const App: React.FC = () => {
             ></Route>
             <Route
               caseSensitive
-              path="/anime/search/advanced"
-              Component={AnimeAdvancedSearchPage}
-            ></Route>
-            <Route
-              caseSensitive
               path="/anime/search"
-              Component={AnimeSearchPage}
+              Component={AnimeAdvancedSearchPage}
             ></Route>
           </Routes>
         </Router>

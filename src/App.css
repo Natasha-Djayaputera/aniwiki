@@ -721,6 +721,7 @@ iframe.trailer {
 .button-style {
   display: block;
   width: fit-content;
+  height: fit-content;
   padding: var(--default-button-padding);
   background-color: white;
   font-weight: 700;
@@ -730,6 +731,22 @@ iframe.trailer {
   border-radius: var(--default-button-border-radius);
   cursor: pointer;
   margin-top: 1em;
+}
+
+.button-style:hover{
+  background-color: rgb(80, 179, 253);
+}
+
+.button-style.secondary {
+  color: white;
+  background-color: black;
+  border: 1px solid rgba(118, 118, 118,0.7);
+}
+
+.button-style.secondary:hover {
+  color: white;
+  background-color: black;
+  border: 1px solid rgb(255, 255, 255);
 }
 
 .button-style:hover {

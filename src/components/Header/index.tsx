@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { setLowerCaseAndDashTo } from "../../helpers/string";
 import Logo from "../../logo.svg";
 
 const Header: React.FC = () => {
@@ -20,9 +19,7 @@ const Header: React.FC = () => {
 
   const handleSearch = () => {
     if (searchInput.trim() !== "") {
-      window.location.href = `/anime/search?q=${setLowerCaseAndDashTo(
-        searchInput
-      )}`;
+      window.location.href = `/anime/search?q=${searchInput}`;
       // Check if the search input is not empty    }
     }
   };
@@ -57,7 +54,7 @@ const Header: React.FC = () => {
           <a href="/anime/recommendation">Recommendation</a>
         </li>
         <li>
-          <a href="/anime/search/advanced">Search</a>
+          <a href="/anime/search">Search</a>
         </li>
       </ul>
       <div className="search-box horizontal-right">
@@ -65,6 +62,7 @@ const Header: React.FC = () => {
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
         <input
+          id="header-search"
           type="text"
           className="input-search"
           placeholder="Type to Search..."
