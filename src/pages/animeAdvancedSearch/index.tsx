@@ -1,22 +1,19 @@
 import {
   Box,
   Checkbox,
-  FormControl,
   FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
   SelectChangeEvent,
   Slider,
   TextField,
   Typography,
 } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import moment, { Moment } from "moment";
 import { useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import AnimeTemplatePage from "../../components/AnimeTemplatePage";
+import FilterDatePicker from "../../components/FilterDatePicker";
+import FilterSelect from "../../components/FilterSelect";
 import ShowMore from "../../components/ShowMore";
 import {
   anime_search_query_rating,
@@ -36,9 +33,11 @@ const AnimeAdvancedSearchPage: React.FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const removeUndefinedValue = (obj: Object) => {
+  const removeUndefinedValue = (
+    param: Record<string, string | number | undefined | boolean>
+  ) => {
     return Object.fromEntries(
-      Object.entries(obj).filter(
+      Object.entries(param).filter(
         ([_, value]) =>
           value !== undefined && value !== "undefined" && !Number.isNaN(value)
       )
@@ -101,14 +100,16 @@ const AnimeAdvancedSearchPage: React.FC = () => {
 
   const handleSearch = () => {
     const filteredSearchFilter = removeUndefinedValue(searchFilter);
-    const newParams = Object.entries(filteredSearchFilter)
-      .map(([key, value]) => {
-        return { [key]: String(value) };
-      })
-      .reduce((result, currentObject) => {
-        return { ...result, ...currentObject };
-      }, {});
+    const newParams = Object.entries(filteredSearchFilter).reduce(
+      (params, [key, value]) => {
+        if (value) params.append(key, value.toString());
+        return params;
+      },
+      new URLSearchParams()
+    );
     setSearchParams(newParams);
+    console.log(newParams instanceof URLSearchParams);
+    return newParams;
   };
 
   const clearFilter = () => {
@@ -118,24 +119,22 @@ const AnimeAdvancedSearchPage: React.FC = () => {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       // Listen for Enter key press
-      handleSearch();
-      window.location.href = `${location.pathname}?${searchParams.toString()}`;
+      const newParams: URLSearchParams = handleSearch();
+      window.location.href = `${location.pathname}?${newParams.toString()}`;
     }
   };
 
   const animeGenresMap = sortedAnimeGenres
     ?.slice(0, !isAdvancedFilter ? 10 : -1)
     .map((genre) => {
+      const genresArray = searchFilter.genres?.split(",") ?? [];
       const handleGenreChange = () => {
-        const genresArray = searchFilter.genres?.split(",") ?? [];
         const index = genresArray.indexOf(String(genre.mal_id));
         const newGenres = genresArray.includes(String(genre.mal_id))
           ? genresArray.filter((_, i) => i !== index)
           : [...genresArray, String(genre.mal_id)];
         setSearchFilter({ ...searchFilter, genres: newGenres.toString() });
       };
-      const genresArray = searchFilter.genres?.split(",") ?? [];
-
       return (
         <FormControlLabel
           key={`${genre.mal_id}`}
@@ -151,115 +150,111 @@ const AnimeAdvancedSearchPage: React.FC = () => {
   return (
     <main>
       <div className="content">
-        <h1>Filter</h1>
-        <div className="filter">
+        <Box
+          component="form"
+          sx={{ m: 1, gap: ".5em" }}
+          className="flex column"
+          noValidate
+          autoComplete="off"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <h1>Filter</h1>
           <ShowMore
             showMoreAltText="Show Advanced Filter"
             showLessAltText="Hide Advanced Filter"
             isShowMore={isAdvancedFilter}
             toggleShowMore={toggleAdvancedFilter}
           />
-          <Box
-            component="div"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "99%" },
-            }}
-          >
-            <TextField
-              id="filter-title"
-              name="q"
-              label="Title"
-              variant="outlined"
-              value={searchFilter.q || ""}
-              onChange={handleTitleChange}
-              onKeyDown={handleKeyPress}
-            />
-          </Box>
+          <TextField
+            name="q"
+            label="Title"
+            variant="outlined"
+            value={searchFilter.q || ""}
+            onChange={handleTitleChange}
+            onKeyDown={handleKeyPress}
+            fullWidth
+          />
           {isAdvancedFilter && (
-            <div>
-              <Box sx={{ m: 1, gap: ".5em" }} className="flex">
-                <FormControl sx={{ width: "10em" }}>
-                  <InputLabel id="filter-type-label">Type</InputLabel>
-                  <Select
-                    labelId="filter-type-select-label"
-                    id="filter-type-select"
-                    value={searchFilter.type || ""}
-                    label="Type"
-                    onChange={handleTypeChange}
-                  >
-                    <MenuItem value={undefined}>None</MenuItem>
-                    <MenuItem value={anime_search_query_type.MOVIE}>
-                      Movie
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_type.MUSIC}>
-                      Music
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_type.ONA}>ONA</MenuItem>
-                    <MenuItem value={anime_search_query_type.OVA}>OVA</MenuItem>
-                    <MenuItem value={anime_search_query_type.SPECIAL}>
-                      Special
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_type.TV}>TV</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ width: "10em" }}>
-                  <InputLabel id="filter-status-label">Status</InputLabel>
-                  <Select
-                    labelId="filter-status-select-label"
-                    id="filter-status-select"
-                    value={searchFilter.status || ""}
-                    label="Status"
-                    onChange={handleStatusChange}
-                  >
-                    <MenuItem value={undefined}>None</MenuItem>
-                    <MenuItem value={anime_search_query_status.AIRING}>
-                      Airing
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_status.COMPLETE}>
-                      Completed
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_status.UPCOMING}>
-                      Upcoming
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ width: "10em" }}>
-                  <InputLabel id="filter-rating-label">Rating</InputLabel>
-                  <Select
-                    labelId="filter-rating-select-label"
-                    id="filter-rating-select"
-                    value={searchFilter.rating || ""}
-                    label="Rating"
-                    onChange={handleRatingChange}
-                  >
-                    <MenuItem value={undefined}>None</MenuItem>
-                    <MenuItem value={anime_search_query_rating.G}>
-                      G - All Ages
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_rating.PG}>
-                      PG - Children
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_rating.PG13}>
-                      PG-13 - Teens 13 or older
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_rating.R17}>
-                      R - 17+ (violence & profanity)
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_rating.R}>
-                      R+ - Mild Nudity
-                    </MenuItem>
-                    <MenuItem value={anime_search_query_rating.RX}>
-                      Rx - Hentai
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+            <>
+              <Box sx={{ gap: ".5em" }} className="flex">
+                <FilterSelect
+                  label="Type"
+                  value={searchFilter.type}
+                  options={[
+                    { label: "Movie", value: anime_search_query_type.MOVIE },
+                    { label: "Music", value: anime_search_query_type.MUSIC },
+                    { label: "ONA", value: anime_search_query_type.ONA },
+                    { label: "OVA", value: anime_search_query_type.OVA },
+                    {
+                      label: "Special",
+                      value: anime_search_query_type.SPECIAL,
+                    },
+                    { label: "TV", value: anime_search_query_type.TV },
+                  ]}
+                  onChange={handleTypeChange}
+                />
+
+                <FilterSelect
+                  label="Status"
+                  value={searchFilter.status}
+                  options={[
+                    {
+                      label: "Airing",
+                      value: anime_search_query_status.AIRING,
+                    },
+                    {
+                      label: "Completed",
+                      value: anime_search_query_status.COMPLETE,
+                    },
+                    {
+                      label: "Upcoming",
+                      value: anime_search_query_status.UPCOMING,
+                    },
+                  ]}
+                  onChange={handleStatusChange}
+                />
+
+                <FilterSelect
+                  label="Rating"
+                  value={searchFilter.rating}
+                  options={[
+                    {
+                      label: "G - All Ages",
+                      value: anime_search_query_rating.G,
+                    },
+                    {
+                      label: "PG - Children",
+                      value: anime_search_query_rating.PG,
+                    },
+                    {
+                      label: "PG-13 - Teens 13 or older",
+                      value: anime_search_query_rating.PG13,
+                    },
+                    {
+                      label: "R - 17+ (violence & profanity)",
+                      value: anime_search_query_rating.R17,
+                    },
+                    {
+                      label: "R+ - Mild Nudity",
+                      value: anime_search_query_rating.R,
+                    },
+                    {
+                      label: "Rx - Hentai",
+                      value: anime_search_query_rating.RX,
+                    },
+                  ]}
+                  onChange={handleRatingChange}
+                />
               </Box>
-              <Box sx={{ m: 2, width: "20em" }}>
+              <Box sx={{ m: 1, width: "20em" }}>
                 <Typography id="non-linear-slider">
                   Score Range: {searchFilter.minScore ?? 0} -{" "}
                   {searchFilter.maxScore ?? 10}
                 </Typography>
                 <Slider
+                  name="score"
                   min={0}
                   step={1}
                   max={10}
@@ -272,60 +267,23 @@ const AnimeAdvancedSearchPage: React.FC = () => {
                   valueLabelDisplay="auto"
                 />
               </Box>
-              <Box sx={{ m: 1, gap: ".5em" }} className="flex">
+              <Box sx={{ gap: ".5em" }} className="flex">
                 <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker
-                    sx={{ width: "15em" }}
+                  <FilterDatePicker
                     label="Start Date"
-                    value={
-                      searchFilter.startDate === undefined
-                        ? null
-                        : moment(searchFilter.startDate, "YYYY-MM-DD")
-                    }
-                    format="DD/MM/YYYY"
-                    slotProps={{
-                      textField: {
-                        helperText: "DD/MM/YYYY",
-                      },
-                      actionBar: {
-                        actions: ["clear"],
-                      },
-                    }}
-                    onChange={(newValue: Moment | null) =>
+                    value={searchFilter.startDate}
+                    onChange={(newStartDate) =>
                       setSearchFilter({
                         ...searchFilter,
-                        startDate:
-                          newValue === null
-                            ? undefined
-                            : newValue.format("YYYY-MM-DD"),
+                        startDate: newStartDate,
                       })
                     }
                   />
-                  <DatePicker
-                    sx={{ width: "15em" }}
+                  <FilterDatePicker
                     label="End Date"
-                    value={
-                      searchFilter.endDate === undefined
-                        ? null
-                        : moment(searchFilter.endDate, "YYYY-MM-DD")
-                    }
-                    format="DD/MM/YYYY"
-                    slotProps={{
-                      textField: {
-                        helperText: "DD/MM/YYYY",
-                      },
-                      actionBar: {
-                        actions: ["clear"],
-                      },
-                    }}
-                    onChange={(newValue: Moment | null) =>
-                      setSearchFilter({
-                        ...searchFilter,
-                        endDate:
-                          newValue === null
-                            ? undefined
-                            : newValue.format("YYYY-MM-DD"),
-                      })
+                    value={searchFilter.endDate}
+                    onChange={(newEndDate) =>
+                      setSearchFilter({ ...searchFilter, endDate: newEndDate })
                     }
                   />
                 </LocalizationProvider>
@@ -334,21 +292,21 @@ const AnimeAdvancedSearchPage: React.FC = () => {
               <Box sx={{ m: 1 }} className="grid-5">
                 {animeGenresMap}
               </Box>
-            </div>
+            </>
           )}
-        </div>
-        <Box sx={{ m: 1, gap: ".5em" }} className="flex">
-          <a
-            href={`${location.pathname}?${searchParams.toString()}`}
-            className="button-style"
-            onClick={handleSearch}
-            onKeyDown={handleKeyPress}
-          >
-            Search
-          </a>
-          <p className="button-style secondary" onClick={clearFilter}>
-            Clear
-          </p>
+          <Box sx={{ gap: ".5em" }} className="flex">
+            <a
+              href={`${location.pathname}?${searchParams.toString()}`}
+              className="button-style"
+              onClick={handleSearch}
+              onKeyDown={handleKeyPress}
+            >
+              Search
+            </a>
+            <p className="button-style secondary" onClick={clearFilter}>
+              Clear
+            </p>
+          </Box>
         </Box>
         {searchParams.size !== 0 && (
           <AnimeTemplatePage
