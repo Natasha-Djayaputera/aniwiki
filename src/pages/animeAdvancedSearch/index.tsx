@@ -59,7 +59,10 @@ const AnimeAdvancedSearchPage: React.FC = () => {
       page: Number(searchParams.get("page") ?? undefined),
     })
   );
-  const searchAnimesResult = useAdvancedAnimeSearch(searchFilter);
+  const searchAnimesResult = useAdvancedAnimeSearch(
+    searchFilter,
+    searchParams.size !== 0
+  );
   const animeGenresResult = useAnimeGenres();
 
   const sortedAnimeGenres = animeGenresResult?.sort((a, b) => {
@@ -308,7 +311,7 @@ const AnimeAdvancedSearchPage: React.FC = () => {
             </p>
           </Box>
         </Box>
-        {searchParams.size !== 0 && (
+        {searchAnimesResult !== undefined && (
           <AnimeTemplatePage
             currentPage={currentPage}
             isLastPage={isLastPage}
