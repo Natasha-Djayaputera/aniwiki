@@ -1,9 +1,11 @@
 import { MouseEvent } from "react";
 import { Rating } from "react-simple-star-rating";
-import { TitleType } from "../../enum/titles";
+import { Delimiter } from "../../enum/Delimiter";
+import { TitleType } from "../../enum/TitleType";
 import { anime } from "../../generated/jikan";
-import { delimiter, joinPropertyOf } from "../../helpers/array";
+import { joinPropertyOf } from "../../helpers/array";
 import { validateNumberInput } from "../../helpers/number";
+import { normalizeScore } from "../../helpers/score";
 import {
   formatStringInput,
   setLowerCaseAndDashTo,
@@ -12,6 +14,7 @@ import {
 } from "../../helpers/string";
 import { getTitlesOfType } from "../../helpers/title";
 import AnimeFeatured from "../AnimeFeatured";
+import InformationRow from "../InformationRow";
 import Trailer from "../Trailer";
 
 export interface AnimePreviewProps {
@@ -67,21 +70,17 @@ const AnimePreview: React.FC<AnimePreviewProps> = ({
                 {formatStringInput(validateStringInput(selectedAnime?.status))}
               </p>
             </div>
-            <p>
-              <b>{"Synonyms:".toUpperCase()}</b>{" "}
-              {joinPropertyOf(synonymsTitle, "title", delimiter.COMMA)}
-            </p>
+            <InformationRow label="SYNONYMS">
+              {joinPropertyOf(synonymsTitle, "title", Delimiter.COMMA)}
+            </InformationRow>
           </div>
 
           <Rating
-            initialValue={
-              selectedAnime?.score === undefined
-                ? 0
-                : Math.floor(selectedAnime?.score!) / 2
-            }
+            initialValue={normalizeScore(selectedAnime?.score)}
             readonly
             size={25}
           />
+
           <div className="flex flex-m vertical-center">
             <p>
               {formatStringInput(validateNumberInput(selectedAnime?.episodes))}{" "}
@@ -97,51 +96,44 @@ const AnimePreview: React.FC<AnimePreviewProps> = ({
                 <b>{selectedAnime?.year}</b>
               </p>
             )}
-
             <p>
               {formatStringInput(validateStringInput(selectedAnime?.rating))}
             </p>
           </div>
           <div className="grid-2">
             <div className="flex column">
-              <p>
-                <b>Broadcast:</b>{" "}
+              <InformationRow label="Broadcast">
                 {formatStringInput(
                   validateStringInput(selectedAnime?.broadcast?.string)
                 )}
-              </p>
-              <p>
-                <b>Demographics:</b>{" "}
+              </InformationRow>
+              <InformationRow label="Demographics">
                 {joinPropertyOf(
                   selectedAnime?.demographics,
                   "name",
-                  delimiter.COMMA
+                  Delimiter.COMMA
                 )}
-              </p>
-              <p>
-                <b>Genre:</b>{" "}
-                {joinPropertyOf(selectedAnime?.genres, "name", delimiter.COMMA)}
-              </p>
-              <p>
-                <b>Themes:</b>{" "}
-                {joinPropertyOf(selectedAnime?.themes, "name", delimiter.COMMA)}
-              </p>
+              </InformationRow>
+              <InformationRow label="Genre">
+                {joinPropertyOf(selectedAnime?.genres, "name", Delimiter.COMMA)}
+              </InformationRow>
+              <InformationRow label="Themes">
+                {joinPropertyOf(selectedAnime?.themes, "name", Delimiter.COMMA)}
+              </InformationRow>
             </div>
             <div className="flex column horizontal-right">
-              <p>
-                <b>Rank:</b>{" "}
+              <InformationRow label="Rank">
                 {formatStringInput(
                   validateNumberInput(selectedAnime?.rank),
                   `#${selectedAnime?.rank}`
                 )}
-              </p>
-              <p>
-                <b>Popularity:</b>{" "}
+              </InformationRow>
+              <InformationRow label="Popularity">
                 {formatStringInput(
                   validateNumberInput(selectedAnime?.popularity),
                   `#${selectedAnime?.popularity}`
                 )}
-              </p>{" "}
+              </InformationRow>
             </div>
           </div>
           <Trailer trailer={selectedAnime?.trailer} />

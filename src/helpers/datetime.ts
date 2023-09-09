@@ -1,10 +1,5 @@
 import moment from "moment";
-
-/**
- * The default date format used for formatting dates.
- * @constant {string}
- */
-const DEFAULTDATEFORMAT = "MMM Do, YYYY";
+import { DATETIME_FORMAT } from "../constants/datetime";
 
 /**
  * Formats a date string using the default date format or returns "?" if invalid.
@@ -12,5 +7,7 @@ const DEFAULTDATEFORMAT = "MMM Do, YYYY";
  * @returns {string} - The formatted date string or "?" if the input is invalid.
  */
 export function getDefaultDateFormat(date: string | null | undefined): string {
-  return moment(date).isValid() ? moment(date).format(DEFAULTDATEFORMAT) : "?";
+  return moment(date).isValid()
+    ? moment(date).format(DATETIME_FORMAT.human)
+    : "?";
 }

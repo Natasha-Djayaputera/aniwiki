@@ -1,10 +1,10 @@
 import React, { MouseEvent } from "react";
-import Cover from "../../assets/placeholders/cover-mockup_1.jpg";
-import { TitleType } from "../../enum/titles";
+import { TitleType } from "../../enum/TitleType";
 import { anime } from "../../generated/jikan";
 import { validateNumberInput } from "../../helpers/number";
 import { formatStringInput } from "../../helpers/string";
 import { getFirstTitleOfType } from "../../helpers/title";
+import { IMAGE_PLACEHOLDER_URL } from "../AnimeCharacterItem";
 
 export interface AnimeImageProps {
   animeData: anime | undefined;
@@ -27,22 +27,27 @@ const AnimeImage: React.FC<AnimeImageProps> = ({
     TitleType.DEFAULT
   );
 
-  if (typeof animeData?.images?.jpg?.image_url === "string") {
+  if (typeof animeData?.images?.jpg?.image_url !== "string") {
     return (
       <img
-        id={`${animeData.mal_id}`}
-        key={animeData.mal_id}
-        src={animeData.images.jpg.image_url}
-        alt={defaultTitle.title}
-        title={defaultTitle.title}
-        onMouseDown={preview ? showPreview : undefined}
+        id="placeholder"
+        key="placeholder"
+        src={IMAGE_PLACEHOLDER_URL}
+        alt="placeholder"
       />
     );
-  } else {
-    return (
-      <img id="placeholder" key="placeholder" src={Cover} alt="placeholder" />
-    );
   }
+
+  return (
+    <img
+      id={`${animeData.mal_id}`}
+      key={animeData.mal_id}
+      src={animeData.images.jpg.image_url}
+      alt={defaultTitle.title}
+      title={defaultTitle.title}
+      onMouseDown={preview ? showPreview : undefined}
+    />
+  );
 };
 
 export default AnimeImage;

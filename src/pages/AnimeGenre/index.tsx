@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
-import AnimeTemplatePage from "../../components/AnimeTemplatePage";
 import ShowMore from "../../components/ShowMore";
 import { useAnimeByGenreWithPage } from "../../hooks/useAnimeByGenreWithPage";
 import { useAnimeGenres } from "../../hooks/useAnimeGenres";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import AnimeTemplatePage from "../../templates/AnimeTemplate";
 
 const AnimeGenrePage: React.FC = () => {
   useDocumentTitle("Anime Genre - ANIWIKI");

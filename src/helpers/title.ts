@@ -1,6 +1,7 @@
-import { TitleType } from "../enum/titles";
+import { NOT_APPLICABLE } from "../constants/string";
+import { TitleType } from "../enum/TitleType";
 import { title } from "../generated/jikan";
-import { NOT_APPLICABLE } from "./string";
+import { isEmptyArray } from "./array";
 
 /**
  * Retrieves the first title object of a specific type from an array of titles.
@@ -13,14 +14,8 @@ export function getFirstTitleOfType(
   titles: title[] | undefined,
   type: TitleType
 ): title {
-  if (titles === undefined) {
-    return { title: NOT_APPLICABLE };
-  }
-  const titleObject = titles.find((title) => title.type === type);
-  if (titleObject === undefined) {
-    return { title: NOT_APPLICABLE };
-  }
-  return titleObject;
+  const titleObject = titles?.find((title) => title.type === type);
+  return titleObject ?? { title: NOT_APPLICABLE };
 }
 
 /**
@@ -34,12 +29,8 @@ export function getTitlesOfType(
   titles: title[] | undefined,
   type: TitleType
 ): title[] {
-  if (titles === undefined) {
-    return [{ title: NOT_APPLICABLE }];
-  }
-  const titleObjects = titles.filter((title) => title.type === type);
-  if (titleObjects === undefined || titleObjects.length === 0) {
-    return [{ title: NOT_APPLICABLE }];
-  }
-  return titleObjects;
+  const titleObjects = titles?.filter((title) => title.type === type);
+  return isEmptyArray(titleObjects)
+    ? [{ title: NOT_APPLICABLE }]
+    : titleObjects;
 }

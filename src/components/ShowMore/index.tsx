@@ -12,18 +12,9 @@ const ShowMore: React.FC<ShowMoreProps> = ({
   showLessAltText = "Show less...",
 }) => {
   return (
-    <>
-      {!isShowMore && (
-        <p className="show-more" onClick={toggleShowMore}>
-          {showMoreAltText}
-        </p>
-      )}
-      {isShowMore && (
-        <p className="show-more" onClick={toggleShowMore}>
-          {showLessAltText}
-        </p>
-      )}
-    </>
+    <p className="show-more" onClick={() => toggleShowMore()}>
+      {isShowMore ? showLessAltText : showMoreAltText}
+    </p>
   );
 };
 

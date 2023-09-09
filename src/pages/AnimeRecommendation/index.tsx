@@ -5,7 +5,7 @@ import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const AnimeRecommendationPage: React.FC = () => {
   useDocumentTitle("Anime Recommendation - ANIWIKI");
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const pageParam =
     searchParams.get("page") === null ? 1 : Number(searchParams.get("page"));
   const location = useLocation();

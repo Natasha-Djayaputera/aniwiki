@@ -1,5 +1,5 @@
 import React from "react";
-import { TitleType } from "../../enum/titles";
+import { TitleType } from "../../enum/TitleType";
 import { anime } from "../../generated/jikan";
 import { getFirstTitleOfType } from "../../helpers/title";
 
@@ -20,13 +20,13 @@ const AnimeFeatured: React.FC<AnimeFeaturedProps> = ({ animeFeaturedData }) => {
   return (
     <div className="featured">
       <img
-        src={`${animeFeaturedData.images!.jpg!.large_image_url}`}
+        src={animeFeaturedData.images?.jpg?.large_image_url ?? undefined}
         alt="featured-background"
-        className="featured-background "
+        className="featured-background"
       />
       <div className="featured-body">
-        <h1>{`${defaultTitle.title}`}</h1>
-        <p className="ellipsis-multiline">{`${animeFeaturedData.synopsis}`}</p>
+        <h1>{defaultTitle.title}</h1>
+        <p className="ellipsis-multiline">{animeFeaturedData.synopsis}</p>
         <a href={`/anime/${animeFeaturedData.mal_id}`}>
           <i className="fa-solid fa-circle-info more-info-icon"></i>More Info
         </a>

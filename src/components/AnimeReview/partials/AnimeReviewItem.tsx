@@ -1,13 +1,14 @@
-import { useState } from "react";
 import { Rating } from "react-simple-star-rating";
-import { anime_review } from "../../generated/jikan";
-import { getDefaultDateFormat } from "../../helpers/datetime";
+import { anime_review } from "../../../generated/jikan";
+import { getDefaultDateFormat } from "../../../helpers/datetime";
+import { normalizeScore } from "../../../helpers/score";
 import {
   formatStringInput,
   setLowerCaseAndDashTo,
   validateStringInput,
-} from "../../helpers/string";
-import ShowMore from "../ShowMore";
+} from "../../../helpers/string";
+import { useFlipFlop } from "../../../hooks/useFlipFlop";
+import ShowMore from "../../ShowMore";
 
 export interface AnimeReviewItemProps {
   animeReviewData: anime_review | undefined;
@@ -16,11 +17,7 @@ export interface AnimeReviewItemProps {
 const AnimeReviewItem: React.FC<AnimeReviewItemProps> = ({
   animeReviewData,
 }) => {
-  const [isShowMore, setIsShowMore] = useState<boolean>(false);
-
-  const toggleShowMore = () => {
-    setIsShowMore(!isShowMore);
-  };
+  const [isShowMore, , , toggleShowMore] = useFlipFlop(false);
 
   if (animeReviewData === undefined) {
     return null;
@@ -46,9 +43,7 @@ const AnimeReviewItem: React.FC<AnimeReviewItemProps> = ({
       </div>
       <div className="flex flex-m">{reviewTagsMap}</div>
       <Rating
-        initialValue={
-          animeReviewData.score === undefined ? 0 : animeReviewData.score! / 2
-        }
+        initialValue={normalizeScore(animeReviewData.score)}
         readonly
         size={15}
       />

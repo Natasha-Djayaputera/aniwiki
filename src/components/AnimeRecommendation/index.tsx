@@ -9,10 +9,7 @@ export interface AnimeRecommendationProps {
 const AnimeRecommendation: React.FC<AnimeRecommendationProps> = ({
   animeRecommendationData,
 }) => {
-  if (
-    animeRecommendationData === undefined ||
-    animeRecommendationData.entry === undefined
-  ) {
+  if (animeRecommendationData?.entry === undefined) {
     return null;
   }
   const sourceAnime = animeRecommendationData.entry[0];

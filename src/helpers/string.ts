@@ -1,8 +1,6 @@
-/**
- * A constant representing "N/A" for undefined or null values.
- * @constant {string}
- */
-export const NOT_APPLICABLE = "N/A";
+import { THOUSAND_FORMATTER } from "../constants/intl";
+import { WHITE_SPACE_REGEX } from "../constants/regex";
+import { NOT_APPLICABLE } from "../constants/string";
 
 /**
  * Converts a string to lowercase and replaces spaces with dashes.
@@ -10,7 +8,7 @@ export const NOT_APPLICABLE = "N/A";
  * @returns {string} - The transformed string.
  */
 export function setLowerCaseAndDashTo(string: string): string {
-  return string.toLowerCase().replace(/\s+/g, "-");
+  return string.toLowerCase().replace(WHITE_SPACE_REGEX, "-");
 }
 
 /**
@@ -23,9 +21,9 @@ export function setSentenceCaseTo(
   string: string | null | undefined,
   resultString = NOT_APPLICABLE
 ): string {
-  return string === undefined || string === null
-    ? resultString
-    : string.charAt(0).toUpperCase() + string.slice(1);
+  return typeof string === "string"
+    ? string?.charAt(0).toUpperCase() + string?.slice(1)
+    : resultString;
 }
 
 /**
@@ -37,9 +35,7 @@ export function setSentenceCaseTo(
 export function setThousandSeparatorTo(
   number: number | null | undefined
 ): string {
-  return number === undefined || number === null
-    ? ""
-    : number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return typeof number === "string" ? THOUSAND_FORMATTER.format(number) : "";
 }
 
 /**
@@ -49,11 +45,7 @@ export function setThousandSeparatorTo(
  *                    or an empty string otherwise.
  */
 export function validateStringInput(string: string | null | undefined): string {
-  if (string === undefined || string === null) {
-    return "";
-  } else {
-    return string;
-  }
+  return string ?? "";
 }
 
 /**
@@ -68,9 +60,7 @@ export function formatStringInput(
   formattedResultString?: string | undefined,
   resultString = NOT_APPLICABLE
 ): string {
-  if (string === "") {
-    return resultString;
-  } else {
-    return formattedResultString ?? string.toString();
-  }
+  return string === ""
+    ? resultString
+    : formattedResultString ?? string.toString();
 }

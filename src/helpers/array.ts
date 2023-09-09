@@ -1,4 +1,5 @@
-import { NOT_APPLICABLE } from "./string";
+import { NOT_APPLICABLE } from "../constants/string";
+import { Delimiter } from "../enum/Delimiter";
 
 /**
  * Retrieves a random element from an array.
@@ -10,14 +11,10 @@ export function getRandomElementOf<T>(array: T[]): T | undefined {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-/**
- * Enumeration of join delimiters.
- * @enum {string}
- */
-export enum delimiter {
-  COMMA = ", ",
-  LINEBREAK = "\n",
-  SPACE = " ",
+export function isEmptyArray<T>(
+  array: T[] | null | undefined
+): array is [] | null | undefined {
+  return array === undefined || array === null || array.length === 0;
 }
 
 /**
@@ -25,15 +22,15 @@ export enum delimiter {
  * @template T - The type of objects in the array.
  * @param {T[] | undefined} array - The array of objects.
  * @param {keyof T} property - The property of objects to join.
- * @param {delimiter} [joinDelimiter=delimiter.LINEBREAK] - The delimiter used for joining.
+ * @param {Delimiter} [joinDelimiter=Delimiter.LINEBREAK] - The delimiter used for joining.
  * @returns {string} - The joined property values.
  */
 export function joinPropertyOf<T>(
   array: T[] | undefined,
   property: keyof T,
-  joinDelimiter: delimiter = delimiter.LINEBREAK
+  joinDelimiter: Delimiter = Delimiter.LINEBREAK
 ): string {
-  return array === undefined || array.length === 0
+  return isEmptyArray(array)
     ? NOT_APPLICABLE
     : array.map((obj) => obj[property]).join(joinDelimiter);
 }

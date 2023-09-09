@@ -1,42 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { useFlipFlop } from "../../hooks/useFlipFlop";
 import Logo from "../../logo.svg";
 
 const Header: React.FC = () => {
-  const [pinned, setPinned] = useState("-unpinned");
-  const [searchInput, setSearchInput] = useState(""); // State to store the input value
-
-  const listenScrollEvent = () => {
-    if (window.scrollY > 1) {
-      setPinned("-pinned");
-    } else {
-      setPinned("-unpinned");
-    }
-  };
+  const [isPinned, , , togglePin] = useFlipFlop(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value); // Update the search input state
+    setSearchInput(e.target.value);
   };
 
   const handleSearch = () => {
     if (searchInput.trim() !== "") {
       window.location.href = `/anime/search?q=${searchInput}`;
-      // Check if the search input is not empty    }
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      // Listen for Enter key press
       handleSearch();
     }
   };
 
   useEffect(() => {
+    const listenScrollEvent = () => {
+      togglePin(window.scrollY > 1);
+    };
+
     window.addEventListener("scroll", listenScrollEvent);
-  });
+
+    return () => {
+      window.removeEventListener("scroll", listenScrollEvent);
+    };
+  }, [togglePin]);
 
   return (
-    <header className={`flex vertical-center header-color${pinned}`}>
+    <header
+      className={`flex vertical-center header-color${
+        isPinned ? "-pinned" : "-unpinned"
+      }`}
+    >
       <a href="/">
         <img src={Logo} alt="logo" />
       </a>

@@ -29,7 +29,7 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
         labelId={`filter-${label.toLowerCase()}-select-label`}
         id={`filter-${label.toLowerCase()}-select`}
         name={label.toLowerCase()}
-        value={value || ""}
+        value={value ?? ""}
         label={label}
         onChange={onChange}
       >

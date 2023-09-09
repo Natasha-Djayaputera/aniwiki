@@ -5,23 +5,20 @@ export interface TrailerProps {
 }
 
 const Trailer: React.FC<TrailerProps> = ({ trailer }) => {
-  if (trailer === undefined) {
+  if (typeof trailer?.embed_url !== "string") {
     return null;
-  } else if (typeof trailer?.embed_url !== "string") {
-    return null;
-  } else {
-    return (
-      <>
-        <h2>Trailers</h2>
-        <hr></hr>
-        <iframe
-          className="trailer"
-          title={trailer.embed_url}
-          src={trailer.embed_url}
-        ></iframe>
-      </>
-    );
   }
+  return (
+    <>
+      <h2>Trailers</h2>
+      <hr></hr>
+      <iframe
+        className="trailer"
+        title={trailer.embed_url}
+        src={trailer.embed_url}
+      ></iframe>
+    </>
+  );
 };
 
 export default Trailer;

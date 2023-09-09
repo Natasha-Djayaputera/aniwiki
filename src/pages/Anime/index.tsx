@@ -5,7 +5,7 @@ import AnimeReview from "../../components/AnimeReview";
 import AnimeSidebarInfo from "../../components/AnimeSidebarInfo";
 import ContentItem from "../../components/ContentItem";
 import Trailer from "../../components/Trailer";
-import { TitleType } from "../../enum/titles";
+import { TitleType } from "../../enum/TitleType";
 import { getFirstTitleOfType } from "../../helpers/title";
 import { useAnimeReviews } from "../../hooks/useAnimeReviews";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";

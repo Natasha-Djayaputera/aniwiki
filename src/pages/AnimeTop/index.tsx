@@ -1,8 +1,8 @@
 import { useSearchParams } from "react-router-dom";
-import AnimeTemplatePage from "../../components/AnimeTemplatePage";
 import { anime_search } from "../../generated/jikan";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useTopAnimeWithPage } from "../../hooks/useTopAnimeWithPage";
+import AnimeTemplatePage from "../../templates/AnimeTemplate";
 
 const AnimeTopPage: React.FC = () => {
   useDocumentTitle("Top Anime - ANIWIKI");

@@ -5,9 +5,5 @@
  *                    or an empty string otherwise.
  */
 export function validateNumberInput(number: number | null | undefined): string {
-  if (number === undefined || number === null) {
-    return "";
-  } else {
-    return number.toString();
-  }
+  return number?.toString() ?? "";
 }

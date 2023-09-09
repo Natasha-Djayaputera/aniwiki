@@ -9,9 +9,8 @@ import {
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
-import AnimeTemplatePage from "../../components/AnimeTemplatePage";
 import FilterDatePicker from "../../components/FilterDatePicker";
 import FilterSelect from "../../components/FilterSelect";
 import ShowMore from "../../components/ShowMore";
@@ -21,33 +20,20 @@ import {
   anime_search_query_type,
 } from "../../generated/jikan";
 import { anime_search_param } from "../../generated/jikan/models/anime_search";
+import { removeNanAndUndefined } from "../../helpers/object";
 import { useAdvancedAnimeSearch } from "../../hooks/useAdvancedAnimeSearch";
 import { useAnimeGenres } from "../../hooks/useAnimeGenres";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import { useFlipFlop } from "../../hooks/useFlipFlop";
+import AnimeTemplatePage from "../../templates/AnimeTemplate";
 
 const AnimeAdvancedSearchPage: React.FC = () => {
   useDocumentTitle("Search Anime - ANIWIKI");
-
-  const [isAdvancedFilter, setIsAdvancedFilter] = useState<boolean>(false);
-
-  const toggleAdvancedFilter = () => {
-    setIsAdvancedFilter(!isAdvancedFilter);
-  };
-
+  const [enabled, , , toggleEnabled] = useFlipFlop(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const removeUndefinedValue = (
-    param: Record<string, string | number | undefined | boolean>
-  ) => {
-    return Object.fromEntries(
-      Object.entries(param).filter(
-        ([_, value]) =>
-          value !== undefined && value !== "undefined" && !Number.isNaN(value)
-      )
-    );
-  };
   const [searchFilter, setSearchFilter] = useState<anime_search_param>(
-    removeUndefinedValue({
+    removeNanAndUndefined({
       q: searchParams.get("q") ?? undefined,
       type: (searchParams.get("type") as anime_search_query_type) ?? undefined,
       minScore: Number(searchParams.get("minScore") ?? undefined),
@@ -68,26 +54,30 @@ const AnimeAdvancedSearchPage: React.FC = () => {
   );
   const animeGenresResult = useAnimeGenres();
 
-  const sortedAnimeGenres = animeGenresResult?.sort((a, b) => {
-    return a.name?.toString().localeCompare(b.name ?? "") ?? 0;
-  });
+  const sortedAnimeGenres = useMemo(
+    () =>
+      animeGenresResult?.sort(
+        (a, b) => a.name?.toString().localeCompare(b.name ?? "") ?? 0
+      ),
+    [animeGenresResult]
+  );
 
   const searchAnimes = searchAnimesResult?.data;
   const isLastPage = !searchAnimesResult?.pagination?.has_next_page;
   const currentPage = searchAnimesResult?.pagination?.current_page;
 
   const handleTypeChange = (event: SelectChangeEvent) => {
-    const selectedType = event.target.value as anime_search_query_type; // Cast the value to the correct type
+    const selectedType = event.target.value as anime_search_query_type;
     setSearchFilter({ ...searchFilter, type: selectedType });
   };
 
   const handleStatusChange = (event: SelectChangeEvent) => {
-    const selectedStatus = event.target.value as anime_search_query_status; // Cast the value to the correct type
+    const selectedStatus = event.target.value as anime_search_query_status;
     setSearchFilter({ ...searchFilter, status: selectedStatus });
   };
 
   const handleRatingChange = (event: SelectChangeEvent) => {
-    const selectedRating = event.target.value as anime_search_query_rating; // Cast the value to the correct type
+    const selectedRating = event.target.value as anime_search_query_rating;
     setSearchFilter({ ...searchFilter, rating: selectedRating });
   };
 
@@ -105,7 +95,7 @@ const AnimeAdvancedSearchPage: React.FC = () => {
   };
 
   const handleSearch = () => {
-    const filteredSearchFilter = removeUndefinedValue(searchFilter);
+    const filteredSearchFilter = removeNanAndUndefined(searchFilter);
     const newParams = Object.entries(filteredSearchFilter).reduce(
       (params, [key, value]) => {
         if (value) params.append(key, value.toString());
@@ -114,7 +104,6 @@ const AnimeAdvancedSearchPage: React.FC = () => {
       new URLSearchParams()
     );
     setSearchParams(newParams);
-    console.log(newParams instanceof URLSearchParams);
     return newParams;
   };
 
@@ -126,12 +115,12 @@ const AnimeAdvancedSearchPage: React.FC = () => {
     if (e.key === "Enter") {
       // Listen for Enter key press
       const newParams: URLSearchParams = handleSearch();
-      window.location.href = `${location.pathname}?${newParams.toString()}`;
+      window.location.search = newParams.toString();
     }
   };
 
   const animeGenresMap = sortedAnimeGenres
-    ?.slice(0, !isAdvancedFilter ? 10 : -1)
+    ?.slice(0, !enabled ? 10 : -1)
     .map((genre) => {
       const genresArray = searchFilter.genres?.split(",") ?? [];
       const handleGenreChange = () => {
@@ -170,8 +159,8 @@ const AnimeAdvancedSearchPage: React.FC = () => {
           <ShowMore
             showMoreAltText="Show Advanced Filter"
             showLessAltText="Hide Advanced Filter"
-            isShowMore={isAdvancedFilter}
-            toggleShowMore={toggleAdvancedFilter}
+            isShowMore={enabled}
+            toggleShowMore={toggleEnabled}
           />
           <TextField
             name="q"
@@ -182,7 +171,7 @@ const AnimeAdvancedSearchPage: React.FC = () => {
             onKeyDown={handleKeyPress}
             fullWidth
           />
-          {isAdvancedFilter && (
+          {enabled && (
             <>
               <Box sx={{ gap: ".5em" }} className="flex">
                 <FilterSelect

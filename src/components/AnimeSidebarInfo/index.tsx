@@ -1,5 +1,5 @@
 import React from "react";
-import { TitleType } from "../../enum/titles";
+import { TitleType } from "../../enum/TitleType";
 import { anime_full } from "../../generated/jikan";
 import { joinPropertyOf } from "../../helpers/array";
 import { getDefaultDateFormat } from "../../helpers/datetime";

@@ -1,9 +1,14 @@
-import { TitleType } from "../../enum/titles";
-import { anime } from "../../generated/jikan";
-import { delimiter, joinPropertyOf } from "../../helpers/array";
-import { validateNumberInput } from "../../helpers/number";
-import { formatStringInput, validateStringInput } from "../../helpers/string";
-import { getFirstTitleOfType } from "../../helpers/title";
+import InformationRow from "../../../components/InformationRow";
+import { Delimiter } from "../../../enum/Delimiter";
+import { TitleType } from "../../../enum/TitleType";
+import { anime } from "../../../generated/jikan";
+import { joinPropertyOf } from "../../../helpers/array";
+import { validateNumberInput } from "../../../helpers/number";
+import {
+  formatStringInput,
+  validateStringInput,
+} from "../../../helpers/string";
+import { getFirstTitleOfType } from "../../../helpers/title";
 
 export interface AnimePageItemProps {
   animeData: anime | undefined;
@@ -71,26 +76,21 @@ const AnimePageItem: React.FC<AnimePageItemProps> = ({ animeData }) => {
           </p>
         </div>
         <div className="flex column">
-          <p>
-            <b>Studios: </b>
-            {joinPropertyOf(animeData.studios, "name", delimiter.COMMA)}
-          </p>
-          <p>
-            <b>Source: </b>
+          <InformationRow label="Studios">
+            {joinPropertyOf(animeData.studios, "name", Delimiter.COMMA)}
+          </InformationRow>
+          <InformationRow label="Source">
             {formatStringInput(validateStringInput(animeData.source))}
-          </p>
-          <p>
-            <b>Genres: </b>
-            {joinPropertyOf(animeData.genres, "name", delimiter.COMMA)}
-          </p>
-          <p>
-            <b>Themes: </b>
-            {joinPropertyOf(animeData.themes, "name", delimiter.COMMA)}
-          </p>
-          <p>
-            <b>Demographics: </b>
-            {joinPropertyOf(animeData.demographics, "name", delimiter.COMMA)}
-          </p>
+          </InformationRow>
+          <InformationRow label="Genres">
+            {joinPropertyOf(animeData.genres, "name", Delimiter.COMMA)}
+          </InformationRow>
+          <InformationRow label="Themes">
+            {joinPropertyOf(animeData.themes, "name", Delimiter.COMMA)}
+          </InformationRow>
+          <InformationRow label="Demographics">
+            {joinPropertyOf(animeData.demographics, "name", Delimiter.COMMA)}
+          </InformationRow>
         </div>
       </div>
     </div>
