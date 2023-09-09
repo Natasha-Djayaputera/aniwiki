@@ -11,6 +11,9 @@
 # production
 /build
 
+# jikan API
+/public/jikan-v4-openapi-v3.json
+
 # misc
 .DS_Store
 .env.local
