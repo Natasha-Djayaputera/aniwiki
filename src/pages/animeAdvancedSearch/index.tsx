@@ -23,8 +23,11 @@ import {
 import { anime_search_param } from "../../generated/jikan/models/anime_search";
 import { useAdvancedAnimeSearch } from "../../hooks/useAdvancedAnimeSearch";
 import { useAnimeGenres } from "../../hooks/useAnimeGenres";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const AnimeAdvancedSearchPage: React.FC = () => {
+  useDocumentTitle("Search Anime - ANIWIKI");
+
   const [isAdvancedFilter, setIsAdvancedFilter] = useState<boolean>(false);
 
   const toggleAdvancedFilter = () => {

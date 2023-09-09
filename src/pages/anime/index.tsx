@@ -8,6 +8,7 @@ import Trailer from "../../components/Trailer";
 import { TitleType } from "../../enum/titles";
 import { getFirstTitleOfType } from "../../helpers/title";
 import { useAnimeReviews } from "../../hooks/useAnimeReviews";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useFullAnime } from "../../hooks/useFullAnime";
 
 const AnimePage: React.FC = () => {
@@ -15,11 +16,16 @@ const AnimePage: React.FC = () => {
   const animeData = useFullAnime(Number(id));
   const animeReviews = useAnimeReviews(Number(id));
 
+  const defaultTitle = getFirstTitleOfType(
+    animeData?.titles,
+    TitleType.DEFAULT
+  );
+
+  useDocumentTitle(`${defaultTitle.title} - ANIWIKI`);
+
   if (animeData === undefined) {
     return null;
   }
-
-  const defaultTitle = getFirstTitleOfType(animeData.titles, TitleType.DEFAULT);
 
   return (
     <main>

@@ -4,8 +4,10 @@ import AnimeTemplatePage from "../../components/AnimeTemplatePage";
 import ShowMore from "../../components/ShowMore";
 import { useAnimeByGenreWithPage } from "../../hooks/useAnimeByGenreWithPage";
 import { useAnimeGenres } from "../../hooks/useAnimeGenres";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const AnimeGenrePage: React.FC = () => {
+  useDocumentTitle("Anime Genre - ANIWIKI");
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const genreParam = searchParams.get("genre");
