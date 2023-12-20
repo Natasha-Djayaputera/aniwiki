@@ -1,4 +1,5 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Analytics } from "@vercel/analytics/react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
@@ -21,6 +22,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={darkTheme}>
       <div className="App">
         <Header />
+        <Analytics />
         <Router>
           <Routes>
             <Route caseSensitive path="/" Component={HomePage}></Route>
